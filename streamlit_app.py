@@ -2,7 +2,7 @@ import streamlit as st
 
 # ========== KONFIGURASI ==========
 st.set_page_config(page_title="GraviLab – Analisis Gravimetri", page_icon="⚗️", layout="wide")
-st.markdown("""<style>.block-container{padding-top:2rem;}.rumus-box{background:#f0f8ff;border-left:4px solid #2c7be5;padding:12px 16px;border-radius:6px;font-family:monospace;color:#000;}.reaksi-box{background:#f8f9fa;border:1px solid #dee2e6;border-radius:10px;padding:16px;}</style>""", unsafe_allow_html=True)
+st.markdown("""<style>.block-container{padding-top:2rem;}.rumus-box{background:#f0f8ff;border-left:4px solid #2c7be5;padding:12px 16px;border-radius:6px;font-family:monospace;color:#000;}.reaksi-box{background:#f8f9fa;border:1px solid #dee2e6;border-radius:10px;padding:16px;}div.stButton > button:first-child {background-color:#ff2b2b;color:white;border:none;}</style>""", unsafe_allow_html=True)
 
 # ========== SIDEBAR ==========
 st.sidebar.title("⚗️ GraviLab")
@@ -32,7 +32,7 @@ if menu == "🏠 Beranda":
 elif menu == "📋 Panduan Prosedur":
     st.title("📋 Panduan Prosedur Interaktif")
     st.divider()
-    tab1,tab2,tab3,tab4,tab5=st.tabs(["Perc 1","Perc 2","Perc 3","Perc 4","Perc 5"])
+    tab1,tab2,tab3,tab4,tab5=st.tabs(["Percobaan 1","Percobaan 2","Percobaan 3","Percobaan 4","Percobaan 5"])
     with tab1:
         st.subheader("Percobaan 1: Penetapan Kadar Air dalam Tepung Terigu")
         st.caption("SNI 3751:2009 | Suhu Pengeringan 130°C")
@@ -75,7 +75,7 @@ elif menu == "📋 Panduan Prosedur":
 elif menu == "🧮 Kalkulator Gravimetri":
     st.title("🧮 Kalkulator Gravimetri Otomatis")
     st.divider()
-    tab1,tab2,tab3,tab4,tab5=st.tabs(["Air","Abu","Sulfat","Fe","Ba"])
+    tab1,tab2,tab3,tab4,tab5=st.tabs(["Kadar Air","Kadar Abu","Kadar Sulfat","Kadar Fe","Kadar Ba"])
     with tab1:
         st.markdown('<div class="rumus-box">Kadar Air (%) = [(W₁ - W₂) / (W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
         w0=st.number_input("Bobot wadah kosong (W₀)",format="%.4f",key="wa0")
@@ -93,29 +93,61 @@ elif menu == "🧮 Kalkulator Gravimetri":
             kadar=((w2-w0)/(w1-w0))*100 if w1>w0 and w2>=w0 else -1
             st.success(f"✅ Kadar Abu = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data input!")
     with tab3:
-        st.markdown('<div class="rumus-box">Kadar SO₄ (%) = 0,4116 × [(W₂ - W₀)/(W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">Kadar SO₄ (%) = (BM SO₄ / Mr BaSO₄) × [(W₂ - W₀)/(W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
+        st.markdown("Di mana:")
+        st.markdown("- **BM SO₄** = massa molar SO₄ = **96,06 g·mol⁻¹**")
+        st.markdown("- **Mr BaSO₄** = massa molar BaSO₄ = **233,39 g·mol⁻¹**")
+        st.markdown("- Karena 1 mol BaSO₄ mengandung 1 mol SO₄²⁻, maka faktor konversi = BM SO₄ / Mr BaSO₄")
+        st.markdown(f"- **Faktor** = 96.06 / 233.39 = **{96.06/233.39:.4f}**")
         w0=st.number_input("Bobot cawan + kertas saring kosong (W₀)",format="%.4f",key="ws0")
         w1=st.number_input("Bobot sampel awal (W₁)",format="%.4f",key="ws1")
         w2=st.number_input("Bobot residu BaSO₄ + wadah (W₂)",format="%.4f",key="ws2")
         if st.button("Hitung Kadar Sulfat",type="primary"):
-            kadar=0.4116*((w2-w0)/(w1-w0))*100 if w1>w0 and w2>=w0 else -1
-            st.success(f"✅ Kadar SO₄ = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data input!")
+            if w1 > w0 and w2 >= w0:
+                massa_BaSO4 = w2 - w0
+                massa_sampel = w1 - w0
+                faktor = 96.06 / 233.39
+                kadar = faktor * (massa_BaSO4 / massa_sampel) * 100
+                st.success(f"✅ Massa BaSO₄ = {massa_BaSO4:.4f} g\n✅ Faktor (SO₄/BaSO₄) = {faktor:.4f}\n✅ Kadar SO₄ = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Cek kembali data input!")
     with tab4:
-        st.markdown('<div class="rumus-box">Kadar Fe (%) = 0,6994 × [(W₂ - W₀)/(W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">Kadar Fe (%) = (2 × Ar Fe / Mr Fe₂O₃) × [(W₂ - W₀)/(W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
+        st.markdown("Di mana:")
+        st.markdown("- **Ar Fe** = atomik relatif Fe = **55,85 g·mol⁻¹**")
+        st.markdown("- **Mr Fe₂O₃** = massa molar Fe₂O₃ = **159,69 g·mol⁻¹**")
+        st.markdown("- Setiap 1 mol Fe₂O₃ mengandung 2 mol Fe → massa Fe per mol Fe₂O₃ = 2 × Ar Fe")
+        st.markdown(f"- **Faktor** = (2 × 55.85) / 159.69 = **{(2*55.85)/159.69:.4f}**")
         w0=st.number_input("Bobot wadah kosong + abu kertas (W₀)",format="%.4f",key="wf0")
         w1=st.number_input("Bobot sampel awal (W₁)",format="%.4f",key="wf1")
         w2=st.number_input("Bobot residu Fe₂O₃ + wadah (W₂)",format="%.4f",key="wf2")
         if st.button("Hitung Kadar Besi",type="primary"):
-            kadar=0.6994*((w2-w0)/(w1-w0))*100 if w1>w0 and w2>=w0 else -1
-            st.success(f"✅ Kadar Fe = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data input!")
+            if w1 > w0 and w2 >= w0:
+                massa_Fe2O3 = w2 - w0
+                massa_sampel = w1 - w0
+                faktor = (2 * 55.85) / 159.69
+                kadar = faktor * (massa_Fe2O3 / massa_sampel) * 100
+                st.success(f"✅ Massa Fe₂O₃ = {massa_Fe2O3:.4f} g\n✅ Faktor (Fe/Fe₂O₃) = {faktor:.4f}\n✅ Kadar Fe = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Cek kembali data input!")
     with tab5:
-        st.markdown('<div class="rumus-box">Kadar Ba (%) = 0,5421 × [(W₁ - W₀)/Volume(mL)] × 100</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">Kadar Ba (%) = (Ar Ba / Mr BaCrO₄) × [(W₁ - W₀)/Volume(mL)] × 100</div>',unsafe_allow_html=True)
+        st.markdown("Di mana:")
+        st.markdown("- **Ar Ba** = atomik relatif Ba = **137,33 g·mol⁻¹**")
+        st.markdown("- **Mr BaCrO₄** = massa molar BaCrO₄ = **253,32 g·mol⁻¹**")
+        st.markdown("- Faktor = Ar Ba / Mr BaCrO₄")
+        st.markdown(f"- **Faktor** = 137.33 / 253.32 = **{137.33/253.32:.4f}**")
         w0=st.number_input("Bobot wadah kosong (W₀)",format="%.4f",key="wb0")
         w1=st.number_input("Bobot wadah + endapan BaCrO₄ (W₁)",format="%.4f",key="wb1")
         vol=st.number_input("Volume larutan sampel (mL)",format="%.2f",key="vb")
         if st.button("Hitung Kadar Barium",type="primary"):
-            kadar=0.5421*((w1-w0)/vol)*100 if w1>w0 and vol>0 else -1
-            st.success(f"✅ Kadar Ba = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data input!")
+            if w1 > w0 and vol > 0:
+                massa_BaCrO4 = w1 - w0
+                faktor = 137.33 / 253.32
+                kadar = faktor * (massa_BaCrO4 / vol) * 100
+                st.success(f"✅ Massa BaCrO₄ = {massa_BaCrO4:.4f} g\n✅ Faktor (Ba/BaCrO₄) = {faktor:.4f}\n✅ Kadar Ba = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Cek kembali data input!")
 
 # ========== PENJELASAN REAGEN ==========
 elif menu == "🔬 Penjelasan Reagen":
@@ -135,8 +167,7 @@ elif menu == "🔬 Penjelasan Reagen":
             st.markdown(f"**Fungsi:** {z['fungsi']}\n\n**Alternatif:**\n"+"\n".join(f"- {a}" for a in z['alt']))
 
 # ================================================
-# HALAMAN 5: REAKSI KIMIA VISUAL (SUDAH DIGANTI)
-# Tampilan reaksi tiap percobaan dengan penjelasan
+# HALAMAN 5: REAKSI KIMIA VISUAL
 # ================================================
 elif menu == "⚗️ Reaksi Kimia Visual":
 
@@ -153,23 +184,11 @@ elif menu == "⚗️ Reaksi Kimia Visual":
     col4.error("🔴 Gas (↑)")
     st.divider()
 
-    tab2, tab3, tab4, tab5 = st.tabs([
-        "Percobaan 2", "Percobaan 3",
+    tab3, tab4, tab5 = st.tabs([
+        "Percobaan 3",
         "Percobaan 4", "Percobaan 5"
     ])
 
-    # ---- PERCOBAAN 2 ----
-    with tab2:
-        st.subheader("Percobaan 2 – Reaksi Pembentukan Abu")
-        st.markdown("**Reaksi Pembakaran Zat Organik:**")
-        col1, col2, col3, col4, col5 = st.columns([2,0.5,2,0.5,2])
-        col1.info("Zat Organik")
-        col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
-        col3.info("O₂ Panas")
-        col4.markdown("<div style='text-align:center;padding-top:8px'>→</div>", unsafe_allow_html=True)
-        col5.warning("🟡 Oksida Logam ↓")
-        st.markdown("> + **🔴 CO₂ ↑** + **🔴 H₂O ↑**")
-        st.markdown("> **Penjelasan:** Pemanasan suhu tinggi 550°C menghilangkan seluruh zat organik, menyisakan abu anorganik yang stabil untuk ditimbang.")
 
     # ---- REAKSI PERCOBAAN 3 ----
     with tab3:
@@ -270,20 +289,4 @@ elif menu == "⚗️ Reaksi Kimia Visual":
         st.markdown("> **Penjelasan:** BaCrO₄ berwarna **kuning cerah**. Terbentuk hanya setelah pH cukup tinggi (urea terhidrolisis). Dalam suasana asam, CrO₄²⁻ berubah ke Cr₂O₇²⁻ yang tidak mengendapkan Ba²⁺.")
         st.divider()
 
-        st.markdown("**Reaksi 3: Kesetimbangan Kromat ⇌ Dikromat (kontrol timing pengendapan)**")
-        col1, col2, col3, col4, col5, col6, col7 = st.columns([2,0.5,2,0.5,2,0.5,2])
-        col1.info("2 CrO₄²⁻ (kuning)")
-        col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
-        col3.info("2 H⁺")
-        col4.markdown("<div style='text-align:center;padding-top:8px'>⇌</div>", unsafe_allow_html=True)
-        col5.success("Cr₂O₇²⁻ (jingga)")
-        col6.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
-        col7.success("H₂O")
-
-        st.markdown("""
-        > **Penjelasan:**
-        > - **Suasana asam (awal):** kesetimbangan geser ke kanan → Cr₂O₇²⁻ dominan → Ba²⁺ **tidak** mengendap
-        > - **Setelah urea terhidrolisis (pH naik):** kesetimbangan geser ke kiri → CrO₄²⁻ dominan → BaCrO₄ **mulai mengendap**
-        >
-        > Inilah mekanisme cerdik yang membuat pengendapan terkontrol dan bertahap.
-        """)
+        st.markdown("**Reaksi 3: Kesetimbangan Kromat ⇌ Dikromat (kontrol timing peng
