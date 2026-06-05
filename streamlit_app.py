@@ -1,337 +1,159 @@
 import streamlit as st
 
-# =========================
-# CONFIG
-# =========================
-st.set_page_config(
-    page_title="GraviLab",
-    page_icon="⚗️",
-    layout="wide"
-)
+# ========== KONFIGURASI ==========
+st.set_page_config(page_title="GraviLab – Analisis Gravimetri", page_icon="⚗️", layout="wide")
+st.markdown("""<style>.block-container{padding-top:2rem;}.rumus-box{background:#1e2a3a;border-left:4px solid #f0a500;padding:12px 16px;border-radius:6px;font-family:monospace;}.reaksi-box{background:#0d1b2a;border:1px solid #30363d;border-radius:10px;padding:16px;}</style>""", unsafe_allow_html=True)
 
-st.markdown("""
-<style>
-.block-container{padding-top:1.5rem;}
+# ========== SIDEBAR ==========
+st.sidebar.title("⚗️ GraviLab")
+st.sidebar.caption("Panduan Praktikum Analisis Gravimetri\nPoliteknik AKA Bogor · 2026")
+st.sidebar.divider()
+menu = st.sidebar.radio("Pilih Fitur", ["🏠 Beranda", "📋 Panduan Prosedur", "🧮 Kalkulator Gravimetri", "🔬 Penjelasan Reagen", "⚗️ Reaksi Kimia Visual"])
 
-.rumus-box{
-background:#f5f5f5;
-padding:14px;
-border-left:4px solid orange;
-border-radius:8px;
-color:black;
-margin:10px 0;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-# =========================
-# DATA PROSEDUR
-# =========================
-prosedur={
-
-"Percobaan 1":{
-"judul":"Penetapan Kadar Air dalam Tepung Terigu",
-"caption":"SNI 3751:2009 | Oven 130°C | 1 jam",
-"langkah":[
-"Timbang wadah kosong + tutup, oven (130±3)°C selama 1 jam",
-"Dinginkan desikator 30 menit, timbang sebagai W₀",
-"Timbang sampel 2 g, catat W₁",
-"Oven 130°C selama 1 jam",
-"Masukkan desikator 15 menit",
-"Timbang sebagai W₂"
-]},
-
-"Percobaan 2":{
-"judul":"Penetapan Kadar Abu",
-"caption":"Tanur 550°C",
-"langkah":[
-"Panaskan cawan + tanur",
-"Dinginkan dan timbang W₀",
-"Timbang sampel 3–5 g → W₁",
-"Arangkan sampel",
-"Tanur 550°C ±8 jam",
-"Dinginkan desikator",
-"Ulangi sampai bobot tetap → W₂"
-]},
-
-"Percobaan 3":{
-"judul":"Penetapan Sulfat dalam Garam Glauber",
-"caption":"Metode BaSO₄",
-"langkah":[
-"Timbang 0,5 g sampel",
-"Tambahkan 3 mL HCl 4N",
-"Tambah BaCl₂ panas",
-"Diamkan 1 jam",
-"Saring dan cuci bebas Cl⁻",
-"Teteskan H₂SO₄ pekat",
-"Pijarkan 750°C"
-]},
-
-"Percobaan 4":{
-"judul":"Penetapan Fe",
-"caption":"Fe(OH)₃ → Fe₂O₃",
-"langkah":[
-"Timbang 0,25 g sampel",
-"Tambah HNO₃ pekat",
-"Tambahkan NH₄OH",
-"Diamkan 30–40 menit",
-"Saring + cuci NH₄NO₃",
-"Arangkan kertas",
-"Pijarkan hingga bobot tetap"
-]},
-
-"Percobaan 5":{
-"judul":"Penetapan Ba sebagai BaCrO₄",
-"caption":"Homogeneous precipitation",
-"langkah":[
-"Pipet 25 mL BaCl₂",
-"Asamkan HCl",
-"Tambah K₂CrO₄",
-"Tambah 7,5 g urea",
-"Panaskan ±90 menit",
-"Saring",
-"Oven 110°C"
-]}
-}
-
-# =========================
-# REAGEN
-# =========================
-reagen={
-
-"HCl":
-"Suasana asam untuk mencegah endapan pengganggu.",
-
-"BaCl₂":
-"Mengendapkan sulfat menjadi BaSO₄.",
-
-"HNO₃":
-"Mengoksidasi Fe²⁺ menjadi Fe³⁺.",
-
-"NH₄OH":
-"Mengendapkan Fe(OH)₃.",
-
-"Urea":
-"Menaikkan pH perlahan agar endapan lebih murni.",
-
-"K₂CrO₄":
-"Mengendapkan Ba²⁺ sebagai BaCrO₄.",
-
-"NH₄NO₃":
-"Mencegah peptisasi saat pencucian.",
-
-"H₂SO₄":
-"Mencegah reduksi BaSO₄."
-}
-
-# =========================
-# SIDEBAR
-# =========================
-menu=st.sidebar.radio(
-"Pilih Fitur",
-[
-"🏠 Beranda",
-"📋 Panduan Prosedur",
-"🧮 Kalkulator Gravimetri",
-"🔬 Penjelasan Reagen",
-"⚗️ Reaksi Kimia Visual"
-]
-)
-
-# =========================
-# BERANDA
-# =========================
-if menu=="🏠 Beranda":
-
+# ========== BERANDA ==========
+if menu == "🏠 Beranda":
     st.title("⚗️ GraviLab")
-    st.subheader("Panduan Praktikum Analisis Gravimetri")
-
+    st.subheader("Panduan Digital Praktikum Analisis Gravimetri")
+    st.caption("Politeknik AKA Bogor · Program Studi Analisis Kimia · 2026")
+    st.divider()
+    st.markdown("Selamat datang di **GraviLab** — aplikasi bantu praktikum Analisis Gravimetri digital. Pilih fitur di sidebar kiri untuk memulai.")
     c1,c2=st.columns(2)
-
     with c1:
-        st.info("📋 Panduan Prosedur")
-        st.info("🔬 Penjelasan Reagen")
-
+        st.info("**📋 Panduan Prosedur**\n\nChecklist langkah demi langkah 5 percobaan.")
+        st.info("**🔬 Penjelasan Reagen**\n\nKenapa pakai zat ini? Bisa diganti apa?")
     with c2:
-        st.info("🧮 Kalkulator Gravimetri")
-        st.info("⚗️ Reaksi Kimia Visual")
+        st.info("**🧮 Kalkulator Gravimetri**\n\nInput bobot → hasil kadar otomatis.")
+        st.info("**⚗️ Reaksi Kimia Visual**\n\nTampilan reaksi lengkap & jelas.")
+    st.divider()
+    st.subheader("📚 Daftar Percobaan")
+    st.markdown("| No | Judul Percobaan | Metode | Referensi |\n|:-:|:---|:---|:---|\n|1| Kadar Air Tepung Terigu | Oven 130°C | SNI 3751:2009 |\n|2| Kadar Abu Tepung Terigu | Tanur 550°C | SNI 3751:2018 |\n|3| Kadar Sulfat Garam Glauber | Endap BaSO₄ | — |\n|4| Kadar Fe Garam Besi(II) | Endap→Fe₂O₃ | — |\n|5| Kadar Ba | Homogeneous | — |")
 
-# =========================
-# PANDUAN
-# =========================
-elif menu=="📋 Panduan Prosedur":
-
-    tabs=st.tabs(list(prosedur.keys()))
-
-    for tab,(nama,data) in zip(tabs,prosedur.items()):
-
-        with tab:
-
-            st.subheader(data["judul"])
-            st.caption(data["caption"])
-
-            selesai=0
-
-            for i,x in enumerate(data["langkah"]):
-
-                if st.checkbox(
-                    x,
-                    key=f"{nama}{i}"
-                ):
-                    selesai+=1
-
-            st.progress(
-                selesai/
-                len(data["langkah"])
-            )
-
-# =========================
-# KALKULATOR
-# =========================
-elif menu=="🧮 Kalkulator Gravimetri":
-
-    tabs=st.tabs([
-    "Air","Abu","SO₄","Fe","Ba"
-    ])
-
-    rumus={
-
-    "Air":"""
-(W₁−W₂)
-─────── ×100
-(W₁−W₀)
-""",
-
-    "Abu":"""
-(W₂−W₀)
-─────── ×100
-(W₁−W₀)
-""",
-
-    "SO₄":"""
-BM SO₄     W₂−W₀
-────── × ────── ×100
-BM BaSO₄   W₁−W₀
-
-BM SO₄ = 96
-BM BaSO₄ = 233
-""",
-
-    "Fe":"""
-2×Ar Fe    W₂−W₀
-─────── × ────── ×100
-Mr Fe₂O₃   W₁−W₀
-
-Ar Fe = 56
-Mr Fe₂O₃ = 160
-""",
-
-    "Ba":"""
-Ar Ba    W₁−W₀
-───── × ────── ×100
-Mr BaCrO₄ Volume
-
-Ar Ba = 137
-Mr BaCrO₄ = 253
-"""
-}
-
-    for i,tab in enumerate(tabs):
-
-        with tab:
-
-            nama=list(rumus.keys())[i]
-
-            st.markdown(
-            f"<div class='rumus-box'><pre>{rumus[nama]}</pre></div>",
-            unsafe_allow_html=True
-            )
-
-            w0=st.number_input("W0",key=f"w0{i}")
-            w1=st.number_input("W1",key=f"w1{i}")
-            w2=st.number_input("W2 / Volume",key=f"w2{i}")
-
-# =========================
-# REAGEN
-# =========================
-elif menu=="🔬 Penjelasan Reagen":
-
-    st.title("🔬 Penjelasan Reagen")
-
-    for nama,isi in reagen.items():
-
-        with st.expander(nama):
-
-            st.write(isi)
-
-# =========================
-# REAKSI
-# =========================
-elif menu=="⚗️ Reaksi Kimia Visual":
-
-    tab3,tab4,tab5=st.tabs([
-    "Percobaan 3",
-    "Percobaan 4",
-    "Percobaan 5"
-    ])
-
+# ========== PANDUAN PROSEDUR ==========
+elif menu == "📋 Panduan Prosedur":
+    st.title("📋 Panduan Prosedur Interaktif")
+    st.divider()
+    tab1,tab2,tab3,tab4,tab5=st.tabs(["Perc 1","Perc 2","Perc 3","Perc 4","Perc 5"])
+    with tab1:
+        st.subheader("Kadar Air Tepung Terigu")
+        st.caption("SNI 3751:2009 | Oven 130°C")
+        c1,c2=st.columns(2)
+        c1.markdown("**🧪 Bahan:** Tepung terigu")
+        c2.markdown("**🛠 Alat:** Neraca, Oven, Wadah timbang, Desikator")
+        st.markdown("**✅ Langkah:**")
+        langkah=["Panaskan wadah kosong 1 jam → timbang W₀","Timbang sampel 2g → catat W₁","Panaskan 1 jam di 130°C","Dinginkan desikator → timbang W₂"]
+        selesai=sum(st.checkbox(l,key=f"p1_{i}") for i,l in enumerate(langkah))
+        st.progress(selesai/len(langkah),text=f"Progress: {selesai}/{len(langkah)}")
+    with tab2:
+        st.subheader("Kadar Abu Tepung Terigu")
+        st.caption("SNI 3751:2018 | Tanur 550°C")
+        langkah=["Panaskan cawan kosong → bobot tetap W₀","Timbang sampel 3–5g → catat W₁","Arangkan di Bunsen, abukan 8 jam di tanur","Timbang sampai bobot tetap → catat W₂"]
+        selesai=sum(st.checkbox(l,key=f"p2_{i}") for i,l in enumerate(langkah))
+        st.progress(selesai/len(langkah),text=f"Progress: {selesai}/{len(langkah)}")
     with tab3:
-
-        st.subheader("Penetapan Sulfat")
-
-        st.latex(
-        r"Na_2SO_4 + BaCl_2 \rightarrow BaSO_4\downarrow +2NaCl"
-        )
-
-        st.info(
-        "BaSO₄ mengendap putih."
-        )
-
-        st.latex(
-        r"BaSO_4 +4C \rightarrow BaS +4CO"
-        )
-
-        st.warning(
-        "Dicegah dengan H₂SO₄ pekat."
-        )
-
+        st.subheader("Kadar Sulfat Garam Glauber")
+        langkah=["Timbang 0,5g sampel → larutkan","Asamkan HCl 4N, panaskan mendidih","Tambahkan BaCl₂ panas, diamkan 1 jam","Cuci sampai bebas Cl⁻ → saring → pijar"]
+        selesai=sum(st.checkbox(l,key=f"p3_{i}") for i,l in enumerate(langkah))
+        st.progress(selesai/len(langkah),text=f"Progress: {selesai}/{len(langkah)}")
     with tab4:
-
-        st.subheader("Penetapan Fe")
-
-        st.latex(
-        r"3Fe^{2+}+NO_3^-+4H^+ \rightarrow 3Fe^{3+}+NO+2H_2O"
-        )
-
-        st.latex(
-        r"Fe^{3+}+3NH_4OH \rightarrow Fe(OH)_3\downarrow"
-        )
-
-        st.latex(
-        r"2Fe(OH)_3 \rightarrow Fe_2O_3 +3H_2O"
-        )
-
-        st.success(
-        "Fe₂O₃ ditimbang."
-        )
-
+        st.subheader("Kadar Fe Garam Besi(II)")
+        langkah=["Timbang 0,25g sampel → larutkan","Tambah HNO₃ pekat → oksidasi sempurna","Panaskan, tambah amonia → endapkan Fe(OH)₃","Cuci, pijar jadi Fe₂O₃ → timbang"]
+        selesai=sum(st.checkbox(l,key=f"p4_{i}") for i,l in enumerate(langkah))
+        st.progress(selesai/len(langkah),text=f"Progress: {selesai}/{len(langkah)}")
     with tab5:
+        st.subheader("Kadar Ba (Homogeneous)")
+        langkah=["Pipet 25mL BaCl₂ 0,1M → asamkan HCl","Tambah K₂CrO₄ & urea → encerkan","Panaskan mendidih ±90 menit","Saring, cuci, oven 110°C → timbang"]
+        selesai=sum(st.checkbox(l,key=f"p5_{i}") for i,l in enumerate(langkah))
+        st.progress(selesai/len(langkah),text=f"Progress: {selesai}/{len(langkah)}")
 
-        st.subheader("Penetapan Ba")
+# ========== KALKULATOR ==========
+elif menu == "🧮 Kalkulator Gravimetri":
+    st.title("🧮 Kalkulator Gravimetri Otomatis")
+    st.divider()
+    tab1,tab2,tab3,tab4,tab5=st.tabs(["Air","Abu","Sulfat","Fe","Ba"])
+    with tab1:
+        st.markdown('<div class="rumus-box">Air (%) = [(W₁-W₀)-(W₂-W₀)]/(W₁-W₀)×100</div>',unsafe_allow_html=True)
+        c1,c2,c3=st.columns(3)
+        w0=c1.number_input("W₀",format="%.4f",key="wa0")
+        w1=c2.number_input("W₁",format="%.4f",key="wa1")
+        w2=c3.number_input("W₂",format="%.4f",key="wa2")
+        if st.button("Hitung Air",type="primary"):
+            if w1<=w0 or w2>w1: st.error("Cek kembali data!")
+            else:
+                kadar=((w1-w2)/(w1-w0))*100
+                st.success(f"✅ Kadar Air = {kadar:.4f} %")
+    with tab2:
+        st.markdown('<div class="rumus-box">Abu (%) = (W₂-W₀)/(W₁-W₀)×100</div>',unsafe_allow_html=True)
+        c1,c2,c3=st.columns(3)
+        w0=c1.number_input("W₀",format="%.4f",key="wu0")
+        w1=c2.number_input("W₁",format="%.4f",key="wu1")
+        w2=c3.number_input("W₂",format="%.4f",key="wu2")
+        if st.button("Hitung Abu",type="primary"):
+            if w1<=w0 or w2<w0: st.error("Cek kembali data!")
+            else:
+                kadar=((w2-w0)/(w1-w0))*100
+                st.success(f"✅ Kadar Abu = {kadar:.4f} %")
+    with tab3:
+        st.markdown('<div class="rumus-box">SO₄ (%) = 0,4116 × (W₂-W₀)/(W₁-W₀)×100</div>',unsafe_allow_html=True)
+        c1,c2,c3=st.columns(3)
+        w0=c1.number_input("W₀",format="%.4f",key="ws0")
+        w1=c2.number_input("W₁",format="%.4f",key="ws1")
+        w2=c3.number_input("W₂",format="%.4f",key="ws2")
+        if st.button("Hitung Sulfat",type="primary"):
+            if w1<=w0 or w2<w0: st.error("Cek kembali data!")
+            else:
+                kadar=0.4116*((w2-w0)/(w1-w0))*100
+                st.success(f"✅ Kadar SO₄ = {kadar:.4f} %")
+    with tab4:
+        st.markdown('<div class="rumus-box">Fe (%) = 0,6994 × (W₂-W₀)/(W₁-W₀)×100</div>',unsafe_allow_html=True)
+        c1,c2,c3=st.columns(3)
+        w0=c1.number_input("W₀",format="%.4f",key="wf0")
+        w1=c2.number_input("W₁",format="%.4f",key="wf1")
+        w2=c3.number_input("W₂",format="%.4f",key="wf2")
+        if st.button("Hitung Fe",type="primary"):
+            if w1<=w0 or w2<w0: st.error("Cek kembali data!")
+            else:
+                kadar=0.6994*((w2-w0)/(w1-w0))*100
+                st.success(f"✅ Kadar Fe = {kadar:.4f} %")
+    with tab5:
+        st.markdown('<div class="rumus-box">Ba (%) = 0,5421 × (W₁-W₀)/Vol ×100</div>',unsafe_allow_html=True)
+        c1,c2,c3=st.columns(3)
+        w0=c1.number_input("W₀",format="%.4f",key="wb0")
+        w1=c2.number_input("W₁",format="%.4f",key="wb1")
+        vol=c3.number_input("Volume mL",format="%.2f",key="vb")
+        if st.button("Hitung Ba",type="primary"):
+            if w1<=w0 or vol<=0: st.error("Cek kembali data!")
+            else:
+                kadar=0.5421*((w1-w0)/vol)*100
+                st.success(f"✅ Kadar Ba = {kadar:.4f} %")
 
-        st.latex(
-        r"CO(NH_2)_2 + H_2O \rightarrow 2NH_3 + CO_2"
-        )
+# ========== PENJELASAN REAGEN ==========
+elif menu == "🔬 Penjelasan Reagen":
+    st.title("🔬 Penjelasan Reagen")
+    st.divider()
+    daftar=[
+        {"nama":"HCl","pakai":"Perc 3,4,5","fungsi":"Buat suasana asam agar hanya ion target mengendap","alt":["❌ H₂SO₄ (ganggu sulfat)","❌ HNO₃ (oksidator)"]},
+        {"nama":"BaCl₂","pakai":"Perc 3","fungsi":"Pengendap sulfat jadi BaSO₄ tak larut","alt":["✅ Ba(NO₃)₂ (bisa)","✅ Ba(CH₃COO)₂ (bisa)"]},
+        {"nama":"HNO₃ Pekat","pakai":"Perc 4","fungsi":"Oksidator Fe²⁺→Fe³⁺ agar mudah diendapkan","alt":["✅ H₂O₂ (aman)","✅ Air bromin (kuat)"]},
+        {"nama":"Amonia","pakai":"Perc 4,5","fungsi":"Basa lemah pengendap Fe(OH)₃","alt":["✅ Urea (perlahan)","❌ NaOH/KOH (terlalu kuat)"]},
+        {"nama":"Urea","pakai":"Perc 5","fungsi":"Hidrolisis perlahan → naikkan pH merata","alt":["✅ Heksametilentetramina","❌ Amonia langsung"]},
+        {"nama":"NH₄NO₃","pakai":"Perc 4","fungsi":"Pencuci mencegah peptisasi koloid","alt":["✅ NH₄Cl encer","❌ Air suling saja"]},
+        {"nama":"H₂SO₄ Pekat","pakai":"Perc 3","fungsi":"Cegah reduksi BaSO₄ jadi BaS saat pijar","alt":["❌ Tidak ada pengganti"]}
+    ]
+    for z in daftar:
+        with st.expander(f"🧪 {z['nama']} — dipakai: {z['pakai']}"):
+            st.markdown(f"**Fungsi:** {z['fungsi']}\n\n**Alternatif:**\n"+"\n".join(f"- {a}" for a in z['alt']))
 
-        st.latex(
-        r"Ba^{2+}+CrO_4^{2-}\rightarrow BaCrO_4\downarrow"
-        )
-
-        st.latex(
-        r"2CrO_4^{2-}+2H^+ \rightleftharpoons Cr_2O_7^{2-}+H_2O"
-        )
-
-        st.info(
-        "pH naik → BaCrO₄ mulai mengendap."
-        )
+# ========== REAKSI KIMIA VISUAL ==========
+elif menu == "⚗️ Reaksi Kimia Visual":
+    st.title("⚗️ Reaksi Kimia Visual")
+    st.markdown("🔵 Reaktan  🟢 Larut  🟡 Endapan  🔴 Gas")
+    st.divider()
+    tab2,tab3,tab4,tab5=st.tabs(["Perc 2","Perc 3","Perc 4","Perc 5"])
+    with tab2:
+        st.markdown("**Pembentukan Abu:**\n> Organik + O₂ → **🟡 Oksida Logam ↓** + CO₂↑ + H₂O↑")
+    with tab3:
+        st.markdown("**Pengendapan:**\n> Na₂SO₄ + BaCl₂ → **🟡 BaSO₄ ↓ (putih)** + 2 NaCl\n\n**Cegah Reduksi:**\n> BaSO₄ + 4C → BaS + 4CO ↑  ⚠️ **DIHINDARI pakai H₂SO₄ pekat**")
+    with tab4:
+        st.markdown("**1. Oksidasi:**\n> 3Fe²⁺ + NO₃⁻ + 4H⁺ → 3Fe³⁺ + **🔴 NO ↑** + 2H₂O\n\n**2. Endapan:**\n> Fe³⁺ + 3NH₄OH → **🟡 Fe(OH)₃ ↓ (coklat)** + 3NH₄⁺\n\n**3. Pemanasan:**\n> 2Fe(OH)₃ → **🟡 Fe₂O₃ ↓ (merah bata)** + 3H₂O ↑")
+    with tab5:
+        st.markdown("**1. Hidrolisis Urea:**\n> CO(NH₂)₂ + H₂O → 2NH₃ + **🔴 CO₂ ↑**\n\n**2. Endapan:**\n> Ba²⁺ + CrO₄²⁻ → **🟡 BaCrO₄ ↓ (kuning)**\n\n**3. Kesetimbangan:**\n> 2CrO₄²⁻ + 2H⁺ ⇌ Cr₂O₇²⁻ + H₂O  (pH naik → geser kiri)")
