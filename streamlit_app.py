@@ -135,7 +135,7 @@ elif menu == "🔬 Penjelasan Reagen":
             st.markdown(f"**Fungsi:** {z['fungsi']}\n\n**Alternatif:**\n"+"\n".join(f"- {a}" for a in z['alt']))
 
 # ================================================
-# HALAMAN 5: REAKSI KIMIA VISUAL
+# HALAMAN 5: REAKSI KIMIA VISUAL (SUDAH DIGANTI)
 # Tampilan reaksi tiap percobaan dengan penjelasan
 # ================================================
 elif menu == "⚗️ Reaksi Kimia Visual":
@@ -153,10 +153,23 @@ elif menu == "⚗️ Reaksi Kimia Visual":
     col4.error("🔴 Gas (↑)")
     st.divider()
 
-    tab3, tab4, tab5 = st.tabs([
-        "Percobaan 3",
+    tab2, tab3, tab4, tab5 = st.tabs([
+        "Percobaan 2", "Percobaan 3",
         "Percobaan 4", "Percobaan 5"
     ])
+
+    # ---- PERCOBAAN 2 ----
+    with tab2:
+        st.subheader("Percobaan 2 – Reaksi Pembentukan Abu")
+        st.markdown("**Reaksi Pembakaran Zat Organik:**")
+        col1, col2, col3, col4, col5 = st.columns([2,0.5,2,0.5,2])
+        col1.info("Zat Organik")
+        col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
+        col3.info("O₂ Panas")
+        col4.markdown("<div style='text-align:center;padding-top:8px'>→</div>", unsafe_allow_html=True)
+        col5.warning("🟡 Oksida Logam ↓")
+        st.markdown("> + **🔴 CO₂ ↑** + **🔴 H₂O ↑**")
+        st.markdown("> **Penjelasan:** Pemanasan suhu tinggi 550°C menghilangkan seluruh zat organik, menyisakan abu anorganik yang stabil untuk ditimbang.")
 
     # ---- REAKSI PERCOBAAN 3 ----
     with tab3:
