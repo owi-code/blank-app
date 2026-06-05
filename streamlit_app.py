@@ -114,7 +114,7 @@ elif menu == "🧮 Kalkulator Gravimetri":
 # HALAMAN 5: REAKSI KIMIA VISUAL
 # Tampilan reaksi tiap percobaan dengan penjelasan
 # ================================================
-elif menu == "⚗️ Reaksi Kimia Visual":
+ elif menu == "⚗️ Reaksi Kimia Visual":
 
     st.title("⚗️ Reaksi Kimia Visual")
     st.caption("Semua persamaan reaksi dari tiap percobaan beserta penjelasannya.")
