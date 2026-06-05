@@ -32,7 +32,7 @@ if menu == "🏠 Beranda":
 elif menu == "📋 Panduan Prosedur":
     st.title("📋 Panduan Prosedur Interaktif")
     st.divider()
-    tab1,tab2,tab3,tab4,tab5=st.tabs(["Perc 1","Perc 2","Perc 3","Perc 4","Perc 5"])
+    tab1,tab2,tab3,tab4,tab5=st.tabs(["Percobaan 1","Percobaan 2","Percobaan 3","Percobaan 4","Percobaan 5"])
     with tab1:
         st.subheader("Percobaan 1: Penetapan Kadar Air dalam Tepung Terigu")
         st.caption("SNI 3751:2009 | Suhu Pengeringan 130°C")
@@ -75,7 +75,7 @@ elif menu == "📋 Panduan Prosedur":
 elif menu == "🧮 Kalkulator Gravimetri":
     st.title("🧮 Kalkulator Gravimetri Otomatis")
     st.divider()
-    tab1,tab2,tab3,tab4,tab5=st.tabs(["Air","Abu","Sulfat","Fe","Ba"])
+    tab1,tab2,tab3,tab4,tab5=st.tabs(["Kadar Air","Kadar Abu","Kadar Sulfat","Kadar Fe","Kadar Ba"])
     with tab1:
         st.markdown('<div class="rumus-box">Kadar Air (%) = [(W₁ - W₂) / (W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
         w0=st.number_input("Bobot wadah kosong (W₀)",format="%.4f",key="wa0")
@@ -152,23 +152,10 @@ elif menu == "⚗️ Reaksi Kimia Visual":
     col4.error("🔴 Gas (↑)")
     st.divider()
 
-    tab2, tab3, tab4, tab5 = st.tabs([
-        "Percobaan 2", "Percobaan 3",
+    tab3, tab4, tab5 = st.tabs([
+        "Percobaan 3",
         "Percobaan 4", "Percobaan 5"
     ])
-
-    # ---- PERCOBAAN 2 ----
-    with tab2:
-        st.subheader("Percobaan 2 – Reaksi Pembentukan Abu")
-        st.markdown("**Reaksi Pembakaran Zat Organik:**")
-        col1, col2, col3, col4, col5 = st.columns([2,0.5,2,0.5,2])
-        col1.info("Zat Organik")
-        col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
-        col3.info("O₂ Panas")
-        col4.markdown("<div style='text-align:center;padding-top:8px'>→</div>", unsafe_allow_html=True)
-        col5.warning("🟡 Oksida Logam ↓")
-        st.markdown("> + **🔴 CO₂ ↑** + **🔴 H₂O ↑**")
-        st.markdown("> **Penjelasan:** Pemanasan suhu tinggi 550°C menghilangkan seluruh zat organik, menyisakan abu anorganik yang stabil untuk ditimbang.")
 
     # ---- REAKSI PERCOBAAN 3 ----
     with tab3:
