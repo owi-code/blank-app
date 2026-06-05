@@ -153,8 +153,8 @@ elif menu == "⚗️ Reaksi Kimia Visual":
     col4.error("🔴 Gas (↑)")
     st.divider()
 
-    tab2, tab3, tab4, tab5 = st.tabs([
-        "Percobaan 2", "Percobaan 3",
+    tab3, tab4, tab5 = st.tabs([
+        "Percobaan 3",
         "Percobaan 4", "Percobaan 5"
     ])
 
