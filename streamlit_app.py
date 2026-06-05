@@ -109,12 +109,36 @@ elif menu == "🧮 Kalkulator Gravimetri":
             kadar=0.6994*((w2-w0)/(w1-w0))*100 if w1>w0 and w2>=w0 else -1
             st.success(f"✅ Kadar Fe = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data input!")
     with tab5:
+        st.markdown('<div class="rumus-box">Kadar Ba (%) = 0,5421 × [(W₁ - W₀)/Volume(mL)] × 100</div>',unsafe_allow_html=True)
+        w0=st.number_input("Bobot wadah kosong (W₀)",format="%.4f",key="wb0")
+        w1=st.number_input("Bobot wadah + endapan BaCrO₄ (W₁)",format="%.4f",key="wb1")
+        vol=st.number_input("Volume larutan sampel (mL)",format="%.2f",key="vb")
+        if st.button("Hitung Kadar Barium",type="primary"):
+            kadar=0.5421*((w1-w0)/vol)*100 if w1>w0 and vol>0 else -1
+            st.success(f"✅ Kadar Ba = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data input!")
 
-    # ================================================
+# ========== PENJELASAN REAGEN ==========
+elif menu == "🔬 Penjelasan Reagen":
+    st.title("🔬 Penjelasan Reagen")
+    st.divider()
+    daftar=[
+        {"nama":"HCl","pakai":"Perc 3,4,5","fungsi":"Buat suasana asam agar hanya ion target mengendap sempurna","alt":["❌ H₂SO₄ (mengganggu analisis sulfat)","❌ HNO₃ (bersifat oksidator kuat)"]},
+        {"nama":"BaCl₂","pakai":"Perc 3","fungsi":"Pengendap sulfat membentuk BaSO₄ yang sukar larut","alt":["✅ Ba(NO₃)₂ (bisa dipakai)","✅ Ba(CH₃COO)₂ (bisa dipakai)"]},
+        {"nama":"HNO₃ Pekat","pakai":"Perc 4","fungsi":"Oksidator mengubah Fe²⁺ menjadi Fe³⁺ agar mudah diendapkan","alt":["✅ H₂O₂ (lebih aman)","✅ Air bromin (oksidator kuat)"]},
+        {"nama":"Amonia","pakai":"Perc 4,5","fungsi":"Basa lemah untuk pengatur pH dan pengendap Fe(OH)₃","alt":["✅ Urea (menaikkan pH perlahan)","❌ NaOH/KOH (terlalu kuat, larutkan endapan)"]},
+        {"nama":"Urea","pakai":"Perc 5","fungsi":"Terurai perlahan → NH₃ merata di larutan, pengendapan homogen","alt":["✅ Heksametilentetramina","❌ Amonia langsung (endapan kasar)"]},
+        {"nama":"NH₄NO₃","pakai":"Perc 4","fungsi":"Larutan pencuci cegah peptisasi koloid pada endapan","alt":["✅ NH₄Cl encer","❌ Air suling saja (endapan bisa terurai)"]},
+        {"nama":"H₂SO₄ Pekat","pakai":"Perc 3","fungsi":"Cegah reduksi BaSO₄ menjadi BaS saat pemanasan suhu tinggi","alt":["❌ Tidak ada pengganti yang cocok"]}
+    ]
+    for z in daftar:
+        with st.expander(f"🧪 {z['nama']} — digunakan pada: {z['pakai']}"):
+            st.markdown(f"**Fungsi:** {z['fungsi']}\n\n**Alternatif:**\n"+"\n".join(f"- {a}" for a in z['alt']))
+
+# ================================================
 # HALAMAN 5: REAKSI KIMIA VISUAL
 # Tampilan reaksi tiap percobaan dengan penjelasan
 # ================================================
- elif menu == "⚗️ Reaksi Kimia Visual":
+elif menu == "⚗️ Reaksi Kimia Visual":
 
     st.title("⚗️ Reaksi Kimia Visual")
     st.caption("Semua persamaan reaksi dari tiap percobaan beserta penjelasannya.")
@@ -133,24 +157,6 @@ elif menu == "🧮 Kalkulator Gravimetri":
         "Percobaan 2", "Percobaan 3",
         "Percobaan 4", "Percobaan 5"
     ])
-
-    # ---- REAKSI PERCOBAAN 2 ----
-    with tab2:
-        st.subheader("Percobaan 2 – Pembentukan Oksida Logam saat Pemijaran 550°C")
-
-        st.markdown("**Reaksi Umum Pembakaran Organik:**")
-        col1, col2, col3, col4, col5 = st.columns([2,1,2,1,2])
-        col1.info("Mineral organik")
-        col2.markdown("<div style='text-align:center;font-size:1.3rem;padding-top:8px'>+</div>", unsafe_allow_html=True)
-        col3.info("O₂")
-        col4.markdown("<div style='text-align:center;font-size:1.3rem;padding-top:8px'>→</div>", unsafe_allow_html=True)
-        col5.warning("Oksida Logam ↓")
-
-        st.markdown("""
-        > **Penjelasan:** Saat dipanaskan 550°C, semua senyawa organik (C, H, N) terbakar menjadi CO₂, H₂O, dan N₂ yang menguap.
-        Yang tersisa hanyalah oksida logam padat — inilah yang ditimbang sebagai **kadar abu**.
-        Contoh: 2 FeCO₃ + ½ O₂ → Fe₂O₃ + 2 CO₂
-        """)
 
     # ---- REAKSI PERCOBAAN 3 ----
     with tab3:
