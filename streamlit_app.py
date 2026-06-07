@@ -129,9 +129,9 @@ elif menu == "🧮 Kalkulator Gravimetri":
     # --- PERCOBAAN 4: KADAR BESI ---
     with tab4:
         st.markdown('<div class="rumus-box">📌 Rumus:\nKadar Fe (%) = [(2 × Ar Fe) / BM Fe₂O₃] × [(W₂ - W₀) / (W₁ - W₀)] × 100\nAr Fe = 55,85 ; BM Fe₂O₃ = 159,69\n\nKeterangan:\nW₀ = Bobot wadah + sisa abu kertas (g)\nW₁ = Bobot sampel awal (g)\nW₂ = Bobot wadah + endapan Fe₂O₃ (g)</div>',unsafe_allow_html=True)
-        w0=st.number_input("Bobot wadah kosong + abu kertas (W₀)", format="%.4f", key="wf0")
+        w0=st.number_input("Bobot cawan kosong (W₀)", format="%.4f", key="wf0")
         w1=st.number_input("Bobot sampel awal (W₁)", format="%.4f", key="wf1")
-        w2=st.number_input("Bobot wadah + endapan Fe₂O₃ (W₂)", format="%.4f", key="wf2")
+        w2=st.number_input("Bobot cawan + endapan Fe₂O₃ (W₂)", format="%.4f", key="wf2")
         if st.button("Hitung Kadar Besi", type="primary"):
             if w1 > w0 and w2 >= w0:
                 kadar = ((2 * 55.85) / 159.69) * ((w2 - w0) / (w1 - w0)) * 100
