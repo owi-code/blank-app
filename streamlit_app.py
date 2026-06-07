@@ -61,7 +61,7 @@ elif menu == "📋 Panduan Prosedur":
         st.subheader("Percobaan 3: Penetapan Kadar Sulfat dalam Garam Glauber")
         st.markdown("🧪 **Bahan:** Garam glauber, larutan HCl 4N, larutan BaCl₂ 10%, larutan AgNO₃ 0,1N")
         st.markdown("🛠 **Alat:** Gelas kimia, penangas air mendidih, corong kaca, kertas saring bebas abu, tanur pemijaran, neraca analitik")
-        langkah=["Timbang 0,5 gram sampel → larutkan sepenuhnya dalam air suling","Asamkan dengan larutan HCl 4N, panaskan sampai mendidih","Tambahkan larutan BaCl₂ panas perlahan-lahan sambil diaduk, diamkan selama 1 jam agar endapan sempurna","Cuci endapan sampai bebas ion klorida, saring, pijar sampai bobot tetap → timbang"]
+        langkah=["Timbang 0,5 gram sampel → larutkan sepenuhnya dalam air suling","Asamkan dengan larutan HCl 4N, panaskan sampai mendidih","Tambahkan larutan BaCl₂ panas perlahan‑lahan sambil diaduk, diamkan selama 1 jam agar endapan sempurna","Cuci endapan sampai bebas ion klorida, saring, pijar sampai bobot tetap → timbang"]
         selesai=sum(st.checkbox(l,key=f"p3_{i}") for i,l in enumerate(langkah))
         st.progress(selesai/len(langkah),text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
     with tab4:
@@ -75,57 +75,82 @@ elif menu == "📋 Panduan Prosedur":
         st.subheader("Percobaan 5: Penetapan Kadar Barium dengan Metode Seragam")
         st.markdown("🧪 **Bahan:** Larutan induk BaCl₂, larutan HCl 2N, larutan K₂CrO₄, kristal urea, air suling")
         st.markdown("🛠 **Alat:** Pipet ukur, gelas kimia, penangas air mendidih, corong kaca, kertas saring, pengering udara, neraca analitik")
-        langkah=["Ambil tepat 25 mL larutan BaCl₂ 0,1M → masukkan ke gelas kimia, tambah sedikit larutan HCl encer","Tambahkan larutan K₂CrO₄ dan kristal urea → encerkan sampai tanda batas tertentu","Panaskan perlahan sampai mendidih selama ±90 menit sampai nilai pH naik dan pengendapan berlangsung merata","Saring, cuci bersih, keringkan di pengering 110°C sampai bobot tetap → timbang"]
+        langkah=["Ambil tepat 25 mL larutan BaCl₂ 0,1 M → masukkan ke gelas kimia, tambah sedikit larutan HCl encer","Tambahkan larutan K₂CrO₄ dan kristal urea → encerkan sampai tanda batas tertentu","Panaskan perlahan sampai mendidih selama ±90 menit sampai nilai pH naik dan pengendapan berlangsung merata","Saring, cuci bersih, keringkan di pengering 110 °C sampai bobot tetap → timbang"]
         selesai=sum(st.checkbox(l,key=f"p5_{i}") for i,l in enumerate(langkah))
         st.progress(selesai/len(langkah),text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
 
 # ====================
-# HALAMAN KALKULATOR GRAVIMETRI
+# HALAMAN KALKULATOR GRAVIMETRI ✅ SUDAH DIPERBAIKI PENUH
 # ====================
 elif menu == "🧮 Kalkulator Gravimetri":
     st.title("🧮 Kalkulator Gravimetri Otomatis")
     st.divider()
     tab1,tab2,tab3,tab4,tab5=st.tabs(["Kadar Air","Kadar Abu","Kadar Sulfat","Kadar Besi","Kadar Barium"])
+
+    # --- PERCOBAAN 1: KADAR AIR ---
     with tab1:
-        st.markdown('<div class="rumus-box">Rumus:\nKadar Air (%) = [( (W₁ - W₀) - (W₂ - W₀) ) / (W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
-        w0=st.number_input("Bobot wadah kosong (W₀)",format="%.4f",key="wa0")
-        w1=st.number_input("Bobot wadah + sampel awal (W₁)",format="%.4f",key="wa1")
-        w2=st.number_input("Bobot wadah + residu kering (W₂)",format="%.4f",key="wa2")
-        if st.button("Hitung Kadar Air",type="primary"):
-            kadar=(((w1-w0)-(w2-w0))/(w1-w0))*100 if w1>w0 and w2<=w1 else -1
-            st.success(f"✅ Kadar Air = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data masukan!")
+        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Air (%) = [( (W₁ - W₀) - (W₂ - W₀) ) / (W₁ - W₀)] × 100\n\nKeterangan:\nW₀ = Bobot wadah kosong (g)\nW₁ = Bobot wadah + sampel awal (g)\nW₂ = Bobot wadah + residu setelah dikeringkan (g)</div>',unsafe_allow_html=True)
+        w0=st.number_input("Bobot wadah kosong (W₀)", format="%.4f", key="wa0")
+        w1=st.number_input("Bobot wadah + sampel awal (W₁)", format="%.4f", key="wa1")
+        w2=st.number_input("Bobot wadah + residu kering (W₂)", format="%.4f", key="wa2")
+        if st.button("Hitung Kadar Air", type="primary"):
+            if w1 > w0 and w2 <= w1:
+                kadar = (((w1 - w0) - (w2 - w0)) / (w1 - w0)) * 100
+                st.success(f"✅ Kadar Air = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Periksa kembali nilai masukan! Pastikan W₁ > W₀ dan W₂ ≤ W₁")
+
+    # --- PERCOBAAN 2: KADAR ABU ---
     with tab2:
-        st.markdown('<div class="rumus-box">Rumus:\nKadar Abu (%) = [(W₂ - W₀) / (W₁ - W₀)] × 100</div>',unsafe_allow_html=True)
-        w0=st.number_input("Bobot cawan kosong (W₀)",format="%.4f",key="wu0")
-        w1=st.number_input("Bobot cawan + sampel awal (W₁)",format="%.4f",key="wu1")
-        w2=st.number_input("Bobot cawan + abu (W₂)",format="%.4f",key="wu2")
-        if st.button("Hitung Kadar Abu",type="primary"):
-            kadar=((w2-w0)/(w1-w0))*100 if w1>w0 and w2>=w0 else -1
-            st.success(f"✅ Kadar Abu = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data masukan!")
+        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Abu (%) = [(W₂ - W₀) / (W₁ - W₀)] × 100\n\nKeterangan:\nW₀ = Bobot cawan kosong (g)\nW₁ = Bobot cawan + sampel awal (g)\nW₂ = Bobot cawan + abu setelah dipijar (g)</div>',unsafe_allow_html=True)
+        w0=st.number_input("Bobot cawan kosong (W₀)", format="%.4f", key="wu0")
+        w1=st.number_input("Bobot cawan + sampel awal (W₁)", format="%.4f", key="wu1")
+        w2=st.number_input("Bobot cawan + abu (W₂)", format="%.4f", key="wu2")
+        if st.button("Hitung Kadar Abu", type="primary"):
+            if w1 > w0 and w2 >= w0:
+                kadar = ((w2 - w0) / (w1 - w0)) * 100
+                st.success(f"✅ Kadar Abu = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Periksa kembali nilai masukan! Pastikan W₁ > W₀ dan W₂ ≥ W₀")
+
+    # --- PERCOBAAN 3: KADAR SULFAT ---
     with tab3:
-        st.markdown('<div class="rumus-box">Rumus:\nKadar SO₄²⁻ (%) = (BM SO₄²⁻ / BM BaSO₄) × [(W₂ - W₀) / W₁] × 100\nBM SO₄²⁻ = 96,06 ; BM BaSO₄ = 233,39</div>',unsafe_allow_html=True)
-        w0=st.number_input("Bobot cawan + kertas saring kosong (W₀)",format="%.4f",key="ws0")
-        w1=st.number_input("Bobot sampel awal (W₁)",format="%.4f",key="ws1")
-        w2=st.number_input("Bobot residu BaSO₄ + wadah (W₂)",format="%.4f",key="ws2")
-        if st.button("Hitung Kadar Sulfat",type="primary"):
-            kadar=(96.06/233.39)*((w2-w0)/w1)*100 if w1>0 and w2>=w0 else -1
-            st.success(f"✅ Kadar SO₄²⁻ = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data masukan!")
+        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar SO₄²⁻ (%) = (BM SO₄²⁻ / BM BaSO₄) × [(W₂ - W₀) / W₁] × 100\nBM SO₄²⁻ = 96,06 ; BM BaSO₄ = 233,39\n\nKeterangan:\nW₀ = Bobot cawan + kertas kosong (g)\nW₁ = Bobot sampel yang ditimbang awal (g)\nW₂ = Bobot wadah + endapan BaSO₄ (g)</div>',unsafe_allow_html=True)
+        w0=st.number_input("Bobot cawan + kertas saring kosong (W₀)", format="%.4f", key="ws0")
+        w1=st.number_input("Bobot sampel awal (W₁)", format="%.4f", key="ws1")
+        w2=st.number_input("Bobot wadah + endapan BaSO₄ (W₂)", format="%.4f", key="ws2")
+        if st.button("Hitung Kadar Sulfat", type="primary"):
+            if w1 > 0 and w2 >= w0:
+                kadar = (96.06 / 233.39) * ((w2 - w0) / w1) * 100
+                st.success(f"✅ Kadar SO₄²⁻ = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Periksa kembali nilai masukan! Pastikan W₁ > 0 dan W₂ ≥ W₀")
+
+    # --- PERCOBAAN 4: KADAR BESI ---
     with tab4:
-        st.markdown('<div class="rumus-box">Rumus:\nKadar Fe (%) = [(2 × Ar Fe) / BM Fe₂O₃] × [(W₂ - W₀) / (W₁ - W₀)] × 100\nAr Fe = 55,85 ; BM Fe₂O₃ = 159,69</div>',unsafe_allow_html=True)
-        w0=st.number_input("Bobot wadah kosong + abu kertas (W₀)",format="%.4f",key="wf0")
-        w1=st.number_input("Bobot sampel awal (W₁)",format="%.4f",key="wf1")
-        w2=st.number_input("Bobot residu Fe₂O₃ + wadah (W₂)",format="%.4f",key="wf2")
-        if st.button("Hitung Kadar Besi",type="primary"):
-            kadar=((2*55.85)/159.69)*((w2-w0)/(w1-w0))*100 if w1>w0 and w2>=w0 else -1
-            st.success(f"✅ Kadar Fe = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data masukan!")
+        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Fe (%) = [(2 × Ar Fe) / BM Fe₂O₃] × [(W₂ - W₀) / (W₁ - W₀)] × 100\nAr Fe = 55,85 ; BM Fe₂O₃ = 159,69\n\nKeterangan:\nW₀ = Bobot wadah + sisa abu kertas (g)\nW₁ = Bobot sampel awal (g)\nW₂ = Bobot wadah + endapan Fe₂O₃ (g)</div>',unsafe_allow_html=True)
+        w0=st.number_input("Bobot wadah kosong + abu kertas (W₀)", format="%.4f", key="wf0")
+        w1=st.number_input("Bobot sampel awal (W₁)", format="%.4f", key="wf1")
+        w2=st.number_input("Bobot wadah + endapan Fe₂O₃ (W₂)", format="%.4f", key="wf2")
+        if st.button("Hitung Kadar Besi", type="primary"):
+            if w1 > w0 and w2 >= w0:
+                kadar = ((2 * 55.85) / 159.69) * ((w2 - w0) / (w1 - w0)) * 100
+                st.success(f"✅ Kadar Fe = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Periksa kembali nilai masukan! Pastikan W₁ > W₀ dan W₂ ≥ W₀")
+
+    # --- PERCOBAAN 5: KADAR BARIUM ---
     with tab5:
-        st.markdown('<div class="rumus-box">Rumus:\nKadar Ba (%) = (Ar Ba / BM BaCrO₄) × [(W₁ - W₀) / Volume Sampel] × 100\nAr Ba = 137,33 ; BM BaCrO₄ = 253,32</div>',unsafe_allow_html=True)
-        w0=st.number_input("Bobot wadah kosong (W₀)",format="%.4f",key="wb0")
-        w1=st.number_input("Bobot wadah + endapan BaCrO₄ (W₁)",format="%.4f",key="wb1")
-        vol=st.number_input("Volume larutan sampel (mL)",format="%.2f",key="vb")
-        if st.button("Hitung Kadar Barium",type="primary"):
-            kadar=(137.33/253.32)*((w1-w0)/vol)*100 if w1>w0 and vol>0 else -1
-            st.success(f"✅ Kadar Ba = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data masukan!")
+        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Ba (%) = (Ar Ba / BM BaCrO₄) × [(W₁ - W₀) / Volume Sampel] × 100\nAr Ba = 137,33 ; BM BaCrO₄ = 253,32\n\nKeterangan:\nW₀ = Bobot wadah kosong (g)\nW₁ = Bobot wadah + endapan BaCrO₄ (g)\nVolume = Volume larutan sampel (mL)</div>',unsafe_allow_html=True)
+        w0=st.number_input("Bobot wadah kosong (W₀)", format="%.4f", key="wb0")
+        w1=st.number_input("Bobot wadah + endapan BaCrO₄ (W₁)", format="%.4f", key="wb1")
+        vol=st.number_input("Volume larutan sampel (mL)", format="%.2f", key="vb")
+        if st.button("Hitung Kadar Barium", type="primary"):
+            if w1 > w0 and vol > 0:
+                kadar = (137.33 / 253.32) * ((w1 - w0) / vol) * 100
+                st.success(f"✅ Kadar Ba = {kadar:.4f} %")
+            else:
+                st.error("⚠️ Periksa kembali nilai masukan! Pastikan W₁ > W₀ dan Volume > 0")
 
 # ====================
 # HALAMAN PENJELASAN REAGEN
@@ -172,7 +197,7 @@ elif menu == "⚗️ Reaksi Kimia Visual":
         col5.warning("BaSO₄ ↓ · Putih")
         col6.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
         col7.success("2 NaCl")
-        st.markdown("> **Penjelasan:** Nilai Hasil Kali Kelarutan Ksp ≈ 1,1 × 10⁻¹⁰ artinya sangat sukar larut. Suasana asam mencegah terbentuknya endapan pengganggu seperti BaCO₃ atau BaCrO₄.")
+        st.markdown("> **Penjelasan:** Nilai Hasil Kali Kelarutan Ksp ≈ 1,1 × 10⁻¹⁰ artinya sangat sukar larut. Suasana asam mencegah terbentuknya endapan pengganggu seperti BaCO₃ atau BaCrO₄.")
         st.divider()
         st.markdown("**Reaksi Samping yang Harus Dicegah: Reduksi oleh Karbon**")
         col1, col2, col3, col4, col5, col6, col7 = st.columns([2,0.5,2,0.5,2,0.5,2])
@@ -186,7 +211,7 @@ elif menu == "⚗️ Reaksi Kimia Visual":
         st.markdown("> **Penjelasan:** Inilah alasan wajib meneteskan 1 tetes asam sulfat pekat sebelum pemijaran akhir — agar BaSO₄ tidak berubah menjadi BaS yang larut dan hasil analisis menjadi rendah.")
     with tab4:
         st.subheader("Percobaan 4 · Penetapan Kadar Besi")
-        st.markdown("**Reaksi 1: Pengoksidasi Ion Besi(II) ke Besi(III)**")
+        st.markdown("**Reaksi 1: Pengoksidasi Ion Besi(II) ke Besi(III)**")
         col1, col2, col3, col4, col5, col6, col7, col8, col9 = st.columns([2,0.4,1.5,0.4,1.5,0.4,2,0.4,1.5])
         col1.info("3 Fe²⁺")
         col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
@@ -199,7 +224,7 @@ elif menu == "⚗️ Reaksi Kimia Visual":
         col9.error("NO ↑")
         st.markdown("> **Penjelasan:** Ion Fe²⁺ harus diubah jadi Fe³⁺ karena hidroksida Fe²⁺ mudah larut dan tidak mengendap sempurna. Gas NO tak berwarna di udara segera jadi NO₂ berwarna coklat — lakukan di lemari asam.")
         st.divider()
-        st.markdown("**Reaksi 2: Pembentukan Endapan Besi(III) Hidroksida**")
+        st.markdown("**Reaksi 2: Pembentukan Endapan Besi(III) Hidroksida**")
         col1, col2, col3, col4, col5, col6, col7 = st.columns([2,0.5,2,0.5,2,0.5,2])
         col1.info("Fe³⁺")
         col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
@@ -210,17 +235,17 @@ elif menu == "⚗️ Reaksi Kimia Visual":
         col7.success("3 NH₄⁺")
         st.markdown("> **Penjelasan:** Bersifat koloid halus — itulah sebabnya pencuci wajib pakai larutan garam NH₄NO₃ bukan air saja agar tidak terurai kembali.")
         st.divider()
-        st.markdown("**Reaksi 3: Pemijaran Menjadi Besi(III) Oksida**")
+        st.markdown("**Reaksi 3: Pemijaran Menjadi Besi(III) Oksida**")
         col1, col2, col3, col4, col5 = st.columns([2,0.5,2,0.5,2])
         col1.info("2 Fe(OH)₃")
         col2.markdown("<div style='text-align:center;padding-top:8px'>→</div>", unsafe_allow_html=True)
         col3.warning("Fe₂O₃ ↓ · Merah Bata")
         col4.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
         col5.error("3 H₂O ↑")
-        st.markdown("> **Penjelasan:** Fe₂O₃ berwarna merah bata stabil sampai suhu 900°C — zat inilah yang ditimbang sebagai dasar perhitungan akhir kadar besi.")
+        st.markdown("> **Penjelasan:** Fe₂O₃ berwarna merah bata stabil sampai suhu 900 °C — zat inilah yang ditimbang sebagai dasar perhitungan akhir kadar besi.")
     with tab5:
-        st.subheader("Percobaan 5 · Penetapan Kadar Barium")
-        st.markdown("**Reaksi 1: Hidrolisis Urea · Kunci Metode Seragam**")
+        st.subheader("Percobaan 5 · Penetapan Kadar Barium")
+        st.markdown("**Reaksi 1: Hidrolisis Urea · Kunci Metode Seragam**")
         col1, col2, col3, col4, col5, col6, col7 = st.columns([2,0.5,2,0.5,2,0.5,2])
         col1.info("CO(NH₂)₂")
         col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
@@ -231,7 +256,7 @@ elif menu == "⚗️ Reaksi Kimia Visual":
         col7.error("CO₂ ↑")
         st.markdown("> **Penjelasan:** Terjadi perlahan dan merata ke seluruh larutan — nilai pH naik perlahan sehingga kristal endapan tumbuh besar, padat, dan sangat murni dibanding cara penambahan amonia langsung.")
         st.divider()
-        st.markdown("**Reaksi 2: Pembentukan Endapan Barium Kromat**")
+        st.markdown("**Reaksi 2: Pembentukan Endapan Barium Kromat**")
         col1, col2, col3, col4, col5 = st.columns([2,0.5,2,0.5,2])
         col1.info("Ba²⁺")
         col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
@@ -240,17 +265,17 @@ elif menu == "⚗️ Reaksi Kimia Visual":
         col5.warning("BaCrO₄ ↓ · Kuning Terang")
         st.markdown("> **Penjelasan:** Hanya terbentuk sempurna saat nilai pH sudah cukup tinggi. Di suasana asam ion kromat berubah jadi dikromat yang tidak mengendapkan barium.")
         st.divider()
-        st.markdown("**Reaksi 3: Kesetimbangan Ion Kromat ⇌ Ion Dikromat**")
+        st.markdown("**Reaksi 3: Kesetimbangan Ion Kromat ⇌ Ion Dikromat**")
         col1, col2, col3, col4, col5, col6, col7 = st.columns([2,0.5,2,0.5,2,0.5,2])
         col1.info("2 CrO₄²⁻ · Kuning")
         col2.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
         col3.info("2 H⁺")
         col4.markdown("<div style='text-align:center;padding-top:8px'>⇌</div>", unsafe_allow_html=True)
-         col5.success("Cr₂O₇²⁻ · Jingga")
-         col6.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
-         col7.success("H₂O")
-         st.markdown("""
- > **Penjelasan Mekanisme:**
- > - **Awal Suasana Asam:** Kesetimbangan bergeser ke kanan → ion dikromat dominan → **tidak terbentuk endapan**
- > - **Setelah Urea Terurai:** pH naik → kesetimbangan bergeser ke kiri → ion kromat dominan → **baru terbentuk endapan BaCrO₄** perlahan dan seragam
+        col5.success("Cr₂O₇²⁻ · Jingga")
+        col6.markdown("<div style='text-align:center;padding-top:8px'>+</div>", unsafe_allow_html=True)
+        col7.success("H₂O")
+        st.markdown("""
+> **Penjelasan Mekanisme:**
+> - **Awal Suasana Asam:** Kesetimbangan bergeser ke kanan → ion dikromat dominan → **tidak terbentuk endapan**
+> - **Setelah Urea Terurai:** pH naik → kesetimbangan bergeser ke kiri → ion kromat dominan → **baru terbentuk endapan BaCrO₄** perlahan dan seragam
 """)
