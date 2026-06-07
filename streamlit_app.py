@@ -1,19 +1,16 @@
 import streamlit as st
 
-========== KONFIGURASI ==========
-
+#========== KONFIGURASI ==========
 st.set_page_config(page_title="GraviLab – Analisis Gravimetri", page_icon="⚗️", layout="wide")
 st.markdown("""<style>.block-container{padding-top:2rem;}.rumus-box{background:#f0f8ff;border-left:4px solid #2c7be5;padding:12px 16px;border-radius:6px;font-family:monospace;white-space:pre-line;color:#000;}.reaksi-box{background:#f8f9fa;border:1px solid #dee2e6;border-radius:10px;padding:16px;}div.stButton > button:first-child {background-color:#ff2b2b;color:white;border:none;}</style>""", unsafe_allow_html=True)
 
-========== SIDEBAR ==========
-
+#========== SIDEBAR ==========
 st.sidebar.title("⚗️ GraviLab")
 st.sidebar.caption("Panduan Praktikum Analisis Gravimetri\nPoliteknik AKA Bogor · 2026")
 st.sidebar.divider()
 menu = st.sidebar.radio("Pilih Fitur", ["🏠 Beranda", "📋 Panduan Prosedur", "🧮 Kalkulator Gravimetri", "🔬 Penjelasan Reagen", "⚗️ Reaksi Kimia Visual"])
 
-========== BERANDA ==========
-
+#========== BERANDA ==========
 if menu == "🏠 Beranda":
     st.title("⚗️ GraviLab")
     st.subheader("Panduan Digital Praktikum Analisis Gravimetri")
@@ -31,8 +28,7 @@ if menu == "🏠 Beranda":
     st.subheader("📚 Daftar Percobaan")
     st.markdown("| No | Judul Percobaan | Metode | Referensi |\n|:-:|:---|:---|:---|\n|1| Kadar Air Tepung Terigu | Oven 130°C | SNI 3751:2009 |\n|2| Kadar Abu Tepung Terigu | Tanur 550°C | SNI 3751:2018 |\n|3| Kadar Sulfat dalam Garam Glauber | Pengendapan BaSO₄ | — |\n|4| Kadar Besi dalam Garam Besi(II) | Oksidasi & Endap Fe₂O₃ | — |\n|5| Kadar Barium dengan Metode Homogen | Pengendapan Seragam | — |")
 
-========== PANDUAN PROSEDUR ==========
-
+#========== PANDUAN PROSEDUR ==========
 elif menu == "📋 Panduan Prosedur":
     st.title("📋 Panduan Prosedur Interaktif")
     st.divider()
@@ -75,8 +71,7 @@ elif menu == "📋 Panduan Prosedur":
         selesai=sum(st.checkbox(l,key=f"p5_{i}") for i,l in enumerate(langkah))
         st.progress(selesai/len(langkah),text=f"Progress: {selesai}/{len(langkah)}")
 
-========== KALKULATOR ==========
-
+#========== KALKULATOR ==========
 elif menu == "🧮 Kalkulator Gravimetri":
     st.title("🧮 Kalkulator Gravimetri Otomatis")
     st.divider()
@@ -122,8 +117,7 @@ elif menu == "🧮 Kalkulator Gravimetri":
             kadar=(137.33/253.32)*((w1-w0)/vol)*100 if w1>w0 and vol>0 else -1
             st.success(f"✅ Kadar Ba = {kadar:.4f} %") if kadar>=0 else st.error("⚠️ Cek kembali data input!")
 
-========== PENJELASAN REAGEN ==========
-
+#========== PENJELASAN REAGEN ==========
 elif menu == "🔬 Penjelasan Reagen":
     st.title("🔬 Penjelasan Reagen")
     st.divider()
@@ -140,11 +134,11 @@ elif menu == "🔬 Penjelasan Reagen":
         with st.expander(f"🧪 {z['nama']} — digunakan pada: {z['pakai']}"):
             st.markdown(f"Fungsi: {z['fungsi']}\n\nAlternatif:\n"+"\n".join(f"- {a}" for a in z['alt']))
 
-================================================
+#================================================
 
 # HALAMAN 5: REAKSI KIMIA VISUAL
 
-================================================
+#================================================
 
 elif menu == "⚗️ Reaksi Kimia Visual":
 
