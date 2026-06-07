@@ -89,7 +89,7 @@ elif menu == "🧮 Kalkulator Gravimetri":
 
     # --- PERCOBAAN 1: KADAR AIR ---
     with tab1:
-        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Air (%) = [( (W₁ - W₀) - (W₂ - W₀) ) / (W₁ - W₀)] × 100\n\nKeterangan:\nW₀ = Bobot wadah kosong (g)\nW₁ = Bobot wadah + sampel awal (g)\nW₂ = Bobot wadah + residu setelah dikeringkan (g)</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">📌 Rumus:\nKadar Air (%) = [( (W₁ - W₀) - (W₂ - W₀) ) / (W₁ - W₀)] × 100\n\nKeterangan:\nW₀ = Bobot wadah kosong (g)\nW₁ = Bobot wadah + sampel awal (g)\nW₂ = Bobot wadah + residu setelah dikeringkan (g)</div>',unsafe_allow_html=True)
         w0=st.number_input("Bobot wadah kosong (W₀)", format="%.4f", key="wa0")
         w1=st.number_input("Bobot wadah + sampel awal (W₁)", format="%.4f", key="wa1")
         w2=st.number_input("Bobot wadah + residu kering (W₂)", format="%.4f", key="wa2")
@@ -102,7 +102,7 @@ elif menu == "🧮 Kalkulator Gravimetri":
 
     # --- PERCOBAAN 2: KADAR ABU ---
     with tab2:
-        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Abu (%) = [(W₂ - W₀) / (W₁ - W₀)] × 100\n\nKeterangan:\nW₀ = Bobot cawan kosong (g)\nW₁ = Bobot cawan + sampel awal (g)\nW₂ = Bobot cawan + abu setelah dipijar (g)</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">📌 Rumus:\nKadar Abu (%) = [(W₂ - W₀) / (W₁ - W₀)] × 100\n\nKeterangan:\nW₀ = Bobot cawan kosong (g)\nW₁ = Bobot cawan + sampel awal (g)\nW₂ = Bobot cawan + abu setelah dipijar (g)</div>',unsafe_allow_html=True)
         w0=st.number_input("Bobot cawan kosong (W₀)", format="%.4f", key="wu0")
         w1=st.number_input("Bobot cawan + sampel awal (W₁)", format="%.4f", key="wu1")
         w2=st.number_input("Bobot cawan + abu (W₂)", format="%.4f", key="wu2")
@@ -115,7 +115,7 @@ elif menu == "🧮 Kalkulator Gravimetri":
 
     # --- PERCOBAAN 3: KADAR SULFAT ---
     with tab3:
-        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar SO₄²⁻ (%) = (BM SO₄²⁻ / BM BaSO₄) × [(W₂ - W₀) / W₁] × 100\nBM SO₄²⁻ = 96,06 ; BM BaSO₄ = 233,39\n\nKeterangan:\nW₀ = Bobot cawan + kertas kosong (g)\nW₁ = Bobot sampel yang ditimbang awal (g)\nW₂ = Bobot wadah + endapan BaSO₄ (g)</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">📌 Rumus:\nKadar SO₄²⁻ (%) = (BM SO₄²⁻ / BM BaSO₄) × [(W₂ - W₀) / W₁] × 100\nBM SO₄²⁻ = 96,06 ; BM BaSO₄ = 233,39\n\nKeterangan:\nW₀ = Bobot cawan + kertas kosong (g)\nW₁ = Bobot sampel yang ditimbang awal (g)\nW₂ = Bobot wadah + endapan BaSO₄ (g)</div>',unsafe_allow_html=True)
         w0=st.number_input("Bobot cawan + kertas saring kosong (W₀)", format="%.4f", key="ws0")
         w1=st.number_input("Bobot sampel awal (W₁)", format="%.4f", key="ws1")
         w2=st.number_input("Bobot wadah + endapan BaSO₄ (W₂)", format="%.4f", key="ws2")
@@ -128,7 +128,7 @@ elif menu == "🧮 Kalkulator Gravimetri":
 
     # --- PERCOBAAN 4: KADAR BESI ---
     with tab4:
-        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Fe (%) = [(2 × Ar Fe) / BM Fe₂O₃] × [(W₂ - W₀) / (W₁ - W₀)] × 100\nAr Fe = 55,85 ; BM Fe₂O₃ = 159,69\n\nKeterangan:\nW₀ = Bobot wadah + sisa abu kertas (g)\nW₁ = Bobot sampel awal (g)\nW₂ = Bobot wadah + endapan Fe₂O₃ (g)</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">📌 Rumus:\nKadar Fe (%) = [(2 × Ar Fe) / BM Fe₂O₃] × [(W₂ - W₀) / (W₁ - W₀)] × 100\nAr Fe = 55,85 ; BM Fe₂O₃ = 159,69\n\nKeterangan:\nW₀ = Bobot wadah + sisa abu kertas (g)\nW₁ = Bobot sampel awal (g)\nW₂ = Bobot wadah + endapan Fe₂O₃ (g)</div>',unsafe_allow_html=True)
         w0=st.number_input("Bobot wadah kosong + abu kertas (W₀)", format="%.4f", key="wf0")
         w1=st.number_input("Bobot sampel awal (W₁)", format="%.4f", key="wf1")
         w2=st.number_input("Bobot wadah + endapan Fe₂O₃ (W₂)", format="%.4f", key="wf2")
@@ -141,7 +141,7 @@ elif menu == "🧮 Kalkulator Gravimetri":
 
     # --- PERCOBAAN 5: KADAR BARIUM ---
     with tab5:
-        st.markdown('<div class="rumus-box">📌 Rumus sesuai permintaan:\nKadar Ba (%) = (Ar Ba / BM BaCrO₄) × [(W₁ - W₀) / Volume Sampel] × 100\nAr Ba = 137,33 ; BM BaCrO₄ = 253,32\n\nKeterangan:\nW₀ = Bobot wadah kosong (g)\nW₁ = Bobot wadah + endapan BaCrO₄ (g)\nVolume = Volume larutan sampel (mL)</div>',unsafe_allow_html=True)
+        st.markdown('<div class="rumus-box">📌 Rumus:\nKadar Ba (%) = (Ar Ba / BM BaCrO₄) × [(W₁ - W₀) / Volume Sampel] × 100\nAr Ba = 137,33 ; BM BaCrO₄ = 253,32\n\nKeterangan:\nW₀ = Bobot wadah kosong (g)\nW₁ = Bobot wadah + endapan BaCrO₄ (g)\nVolume = Volume larutan sampel (mL)</div>',unsafe_allow_html=True)
         w0=st.number_input("Bobot wadah kosong (W₀)", format="%.4f", key="wb0")
         w1=st.number_input("Bobot wadah + endapan BaCrO₄ (W₁)", format="%.4f", key="wb1")
         vol=st.number_input("Volume larutan sampel (mL)", format="%.2f", key="vb")
