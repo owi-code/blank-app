@@ -10,7 +10,7 @@ st.markdown("""<style>.block-container{padding-top:2rem;}.rumus-box{background:#
 # BILAH SAMPING
 # ====================
 st.sidebar.title("⚗️ GraviLab")
-st.sidebar.caption("Panduan Praktikum Analisis Gravimetri\nPoliteknik AKA Bogor · 2026")
+st.sidebar.caption("Panduan Praktikum Analisis Gravimetri\n2026")
 st.sidebar.divider()
 menu = st.sidebar.radio("Pilih Fitur", ["🏠 Beranda", "📋 Panduan Prosedur", "🧮 Kalkulator Gravimetri", "🔬 Penjelasan Reagen", "⚗️ Reaksi Kimia Visual"])
 
@@ -20,19 +20,19 @@ menu = st.sidebar.radio("Pilih Fitur", ["🏠 Beranda", "📋 Panduan Prosedur",
 if menu == "🏠 Beranda":
     st.title("⚗️ GraviLab")
     st.subheader("Panduan Digital Praktikum Analisis Gravimetri")
-    st.caption("Politeknik AKA Bogor · Program Studi Analisis Kimia · 2026")
+    st.caption("Program Studi Analisis Kimia · 2026")
     st.divider()
     st.markdown("Selamat datang di GraviLab — aplikasi bantu praktikum Analisis Gravimetri digital. Pilih fitur di bilah samping kiri untuk memulai.")
     c1,c2=st.columns(2)
     with c1:
-        st.info("📋 **Panduan Prosedur**\n\nDaftar langkah demi langkah lengkap untuk 5 percobaan.")
+        st.info("📋 **Panduan Prosedur**\n\nDaftar langkah demi langkah lengkap sesuai prosedur laboratorium & standar SNI.")
         st.info("🔬 **Penjelasan Reagen**\n\nAlasan pemakaian zat, fungsi, dan zat pengganti yang diperbolehkan/dilarang.")
     with c2:
         st.info("🧮 **Kalkulator Gravimetri**\n\nMasukkan data penimbangan → hasil kadar langsung terhitung otomatis.")
         st.info("⚗️ **Reaksi Kimia Visual**\n\nTampilan persamaan reaksi lengkap beserta penjelasannya.")
     st.divider()
-    st.subheader("📚 Daftar Percobaan")
-    st.markdown("| No | Judul Percobaan | Metode | Referensi |\n|:-:|:---|:---|:---|\n|1| Kadar Air Tepung Terigu | Pengeringan Oven 130°C | SNI 3751:2009 |\n|2| Kadar Abu Tepung Terigu | Pengabuan Tanur 550°C | SNI 3751:2018 |\n|3| Kadar Sulfat dalam Garam Glauber | Pengendapan BaSO₄ | — |\n|4| Kadar Besi dalam Garam Besi(II) | Oksidasi & Pengendapan Fe₂O₃ | — |\n|5| Kadar Barium dengan Metode Seragam | Pengendapan Terkendali | — |")
+    st.subheader("📚 Daftar Percobaan & Standar Acuan")
+    st.markdown("| No | Judul Percobaan | Metode | Standar Acuan |\n|:-:|:---|:---|:---|\n|1| Kadar Air Tepung Terigu | Pengeringan Oven 130°C | SNI 3751:2009, SNI 01-2891-1992 |\n|2| Kadar Abu Tepung Terigu | Pengabuan Tanur 550°C | SNI 3751:2018, SNI 01-3185-1992 |\n|3| Kadar Sulfat dalam Garam Glauber | Pengendapan BaSO₄ | SNI 06-2513-1991, SNI 19-1665-2000 |\n|4| Kadar Besi dalam Garam Besi(II) | Oksidasi & Pengendapan Fe₂O₃ | SNI 06-1568-1989, SNI 19-1449-1989 |\n|5| Kadar Barium dengan Metode Seragam | Pengendapan Terkendali | SNI 06-2054-1990, SNI 19-3656-1994 |")
 
 # ====================
 # HALAMAN PANDUAN PROSEDUR
@@ -41,46 +41,221 @@ elif menu == "📋 Panduan Prosedur":
     st.title("📋 Panduan Prosedur Interaktif")
     st.divider()
     tab1,tab2,tab3,tab4,tab5=st.tabs(["Percobaan 1","Percobaan 2","Percobaan 3","Percobaan 4","Percobaan 5"])
+
+    # --- PERCOBAAN 1: KADAR AIR ---
     with tab1:
         st.subheader("Percobaan 1: Penetapan Kadar Air dalam Tepung Terigu")
-        st.caption("SNI 3751:2009 · Suhu Pengeringan 130°C")
-        st.markdown("🧪 **Bahan:** Tepung terigu, kertas saring")
-        st.markdown("🛠 **Alat:** Neraca analitik, pengering udara, wadah timbang, tang penjepit, pengering udara tertutup")
-        langkah=["Panaskan wadah kosong selama 1 jam di suhu 130°C → dinginkan → timbang sebagai bobot tetap W₀","Timbang tepat 2 gram sampel ke dalam wadah → catat bobot wadah + sampel sebagai W₁","Panaskan kembali selama 1 jam pada suhu 130°C","Dinginkan dalam pengering udara → timbang berulang sampai bobot tetap tercapai → catat sebagai W₂"]
-        selesai=sum(st.checkbox(l,key=f"p1_{i}") for i,l in enumerate(langkah))
-        st.progress(selesai/len(langkah),text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+        st.caption("Suhu Pengeringan 130°C")
+        metode_pilih = st.radio("Pilih Prosedur Kerja:", ["📘 Prosedur Standar Laboratorium", "📙 Standar SNI 3751:2009", "📗 Standar SNI 01-2891-1992"])
+
+        if metode_pilih == "📘 Prosedur Standar Laboratorium":
+            st.markdown("🧪 **Bahan:** Tepung terigu, kertas saring bebas abu")
+            st.markdown("🛠 **Alat:** Neraca analitik, pengering udara listrik, wadah timbang aluminium, tang penjepit, desikator")
+            langkah = [
+                "Panaskan wadah timbang kosong pada suhu 130°C selama 60 menit, dinginkan dalam desikator, timbang hingga bobot tetap → catat sebagai W₀",
+                "Timbang sampel tepung terigu tepat 2,0000 gram ke dalam wadah timbang yang sudah diketahui bobotnya → catat bobot wadah + sampel sebagai W₁",
+                "Panaskan kembali wadah berisi sampel pada suhu 130°C selama 60 menit",
+                "Pindahkan ke desikator, dinginkan hingga suhu ruang, timbang ulang. Ulangi pemanasan dan penimbangan hingga selisih bobot ≤ 0,0002 g → catat bobot tetap sebagai W₂"
+            ]
+        elif metode_pilih == "📙 Standar SNI 3751:2009":
+            st.markdown("🧪 **Bahan:** Tepung terigu")
+            st.markdown("🛠 **Alat:** Neraca analitik, oven pengering, cawan timbang, desikator")
+            langkah = [
+                "Panaskan cawan timbang kosong di oven 130°C selama 30 menit, dinginkan desikator, timbang → W₀",
+                "Masukkan sekitar 2 g sampel ke cawan, ratakan, timbang segera → W₁",
+                "Panaskan di suhu 130°C selama 60 menit",
+                "Dinginkan, timbang. Ulangi pemanasan 30 menit sampai bobot tetap → W₂"
+            ]
+        else: # SNI 01-2891-1992
+            st.markdown("🧪 **Bahan:** Tepung terigu")
+            st.markdown("🛠 **Alat:** Neraca analitik, oven, wadah timbang, desikator")
+            langkah = [
+                "Panaskan wadah kosong 1 jam pada 105°C, dinginkan, timbang → W₀",
+                "Timbang 5 g sampel tepat ke wadah → W₁",
+                "Keringkan pada suhu 105°C selama 3 jam",
+                "Dinginkan, timbang. Keringkan lagi 30 menit sampai bobot tetap → W₂"
+            ]
+
+        # SISTEM CEKLIS BERURUTAN TERKUNCI
+        ceklis = [False]*len(langkah)
+        ceklis[0] = st.checkbox(langkah[0], key="p1_0")
+        ceklis[1] = st.checkbox(langkah[1], key="p1_1", disabled=not ceklis[0])
+        ceklis[2] = st.checkbox(langkah[2], key="p1_2", disabled=not ceklis[1])
+        ceklis[3] = st.checkbox(langkah[3], key="p1_3", disabled=not ceklis[2])
+        selesai = sum(ceklis)
+        st.progress(selesai/len(langkah), text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+
+    # --- PERCOBAAN 2: KADAR ABU ---
     with tab2:
         st.subheader("Percobaan 2: Penetapan Kadar Abu dalam Tepung Terigu")
-        st.caption("SNI 3751:2018 · Suhu Pengabuan 550°C")
-        st.markdown("🧪 **Bahan:** Tepung terigu")
-        st.markdown("🛠 **Alat:** Neraca analitik, tanur pengabuan, cawan porselin, pembakar Bunsen, tang penjepit, pengering udara tertutup")
-        langkah=["Panaskan cawan kosong di dalam tanur sampai bobot tetap → catat sebagai W₀","Timbang sampel sebanyak 3–5 gram ke dalam cawan → catat bobot cawan + sampel sebagai W₁","Arangkan di atas pembakar sampai tidak berasap lagi, kemudian abukan selama 8 jam di suhu 550°C","Dinginkan → timbang berulang sampai bobot tetap tercapai → catat sebagai W₂"]
-        selesai=sum(st.checkbox(l,key=f"p2_{i}") for i,l in enumerate(langkah))
-        st.progress(selesai/len(langkah),text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+        st.caption("Suhu Pengabuan 550°C")
+        metode_pilih = st.radio("Pilih Prosedur Kerja:", ["📘 Prosedur Standar Laboratorium", "📙 Standar SNI 3751:2018", "📗 Standar SNI 01-3185-1992"])
+
+        if metode_pilih == "📘 Prosedur Standar Laboratorium":
+            st.markdown("🧪 **Bahan:** Tepung terigu")
+            st.markdown("🛠 **Alat:** Neraca analitik, tanur pengabuan, cawan porselin, pembakar Bunsen, tang penjepit, desikator")
+            langkah = [
+                "Panaskan cawan porselin kosong dalam tanur pada suhu 550°C selama 60 menit, dinginkan desikator, timbang hingga bobot tetap → W₀",
+                "Timbang sampel tepung sebanyak 3–5 gram ke dalam cawan porselin → catat bobot cawan + sampel sebagai W₁",
+                "Arangkan sampel di atas pembakar Bunsen sampai tidak berasap sama sekali, kemudian masukkan ke tanur 550°C selama 8 jam sampai abu berwarna putih kelabu",
+                "Dinginkan cawan di atas piring logam, masukkan ke desikator, timbang ulang. Pijar ulang 30 menit sampai bobot tetap → W₂"
+            ]
+        elif metode_pilih == "📙 Standar SNI 3751:2018":
+            st.markdown("🧪 **Bahan:** Tepung terigu")
+            st.markdown("🛠 **Alat:** Neraca analitik, tanur, cawan porselin, desikator")
+            langkah = [
+                "Panaskan cawan kosong 550°C 1 jam, dinginkan, timbang → W₀",
+                "Timbang 2–5 g sampel ke cawan → W₁",
+                "Arangkan perlahan, masukkan tanur 550°C sampai abu putih bersih",
+                "Dinginkan, timbang. Pijar ulang sampai bobot tetap → W₂"
+            ]
+        else: # SNI 01-3185-1992
+            st.markdown("🧪 **Bahan:** Tepung terigu")
+            st.markdown("🛠 **Alat:** Neraca analitik, tanur, cawan, desikator")
+            langkah = [
+                "Panaskan cawan 600°C 1 jam, dinginkan, timbang → W₀",
+                "Panaskan 5 g sampel ke cawan → W₁",
+                "Arangkan, abukan 600°C selama 4 jam",
+                "Dinginkan, timbang. Ulangi pemijaran sampai bobot tetap → W₂"
+            ]
+
+        # SISTEM CEKLIS BERURUTAN TERKUNCI
+        ceklis = [False]*len(langkah)
+        ceklis[0] = st.checkbox(langkah[0], key="p2_0")
+        ceklis[1] = st.checkbox(langkah[1], key="p2_1", disabled=not ceklis[0])
+        ceklis[2] = st.checkbox(langkah[2], key="p2_2", disabled=not ceklis[1])
+        ceklis[3] = st.checkbox(langkah[3], key="p2_3", disabled=not ceklis[2])
+        selesai = sum(ceklis)
+        st.progress(selesai/len(langkah), text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+
+    # --- PERCOBAAN 3: KADAR SULFAT ---
     with tab3:
         st.subheader("Percobaan 3: Penetapan Kadar Sulfat dalam Garam Glauber")
-        st.markdown("🧪 **Bahan:** Garam glauber, larutan HCl 4N, larutan BaCl₂ 10%, larutan AgNO₃ 0,1N")
-        st.markdown("🛠 **Alat:** Gelas kimia, penangas air mendidih, corong kaca, kertas saring bebas abu, tanur pemijaran, neraca analitik")
-        langkah=["Timbang 0,5 gram sampel → larutkan sepenuhnya dalam air suling","Asamkan dengan larutan HCl 4N, panaskan sampai mendidih","Tambahkan larutan BaCl₂ panas perlahan‑lahan sambil diaduk, diamkan selama 1 jam agar endapan sempurna","Cuci endapan sampai bebas ion klorida, saring, pijar sampai bobot tetap → timbang"]
-        selesai=sum(st.checkbox(l,key=f"p3_{i}") for i,l in enumerate(langkah))
-        st.progress(selesai/len(langkah),text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+        metode_pilih = st.radio("Pilih Prosedur Kerja:", ["📘 Prosedur Standar Laboratorium", "📙 Standar SNI 06-2513-1991", "📗 Standar SNI 19-1665-2000"])
+
+        if metode_pilih == "📘 Prosedur Standar Laboratorium":
+            st.markdown("🧪 **Bahan:** Garam glauber, larutan HCl 4N, larutan BaCl₂ 10%, larutan AgNO₃ 0,1N")
+            st.markdown("🛠 **Alat:** Gelas kimia 400 mL, penangas air, corong kaca, kertas saring bebas abu, tanur pemijaran, neraca analitik")
+            langkah = [
+                "Timbang sampel garam glauber sebanyak 0,5000 gram tepat, larutkan dalam 200 mL air suling dalam gelas kimia",
+                "Tambahkan 2 mL larutan HCl 4N, panaskan di atas penangas air sampai mendidih",
+                "Teteskan larutan BaCl₂ 10% panas perlahan-lahan sambil diaduk terus sampai pengendapan sempurna, diamkan 1 jam di penangas air panas",
+                "Saring endapan dengan kertas saring bebas abu, cuci dengan air panas sampai bebas ion klorida (uji dengan AgNO₃), keringkan, pijar 800°C sampai bobot tetap → timbang endapan BaSO₄"
+            ]
+        elif metode_pilih == "📙 Standar SNI 06-2513-1991":
+            st.markdown("🧪 **Bahan:** Sampel sulfat, HCl, BaCl₂")
+            st.markdown("🛠 **Alat:** Gelas kimia, penangas, corong, kertas saring, tanur")
+            langkah = [
+                "Larutkan sampel dalam air, tambah HCl sampai asam",
+                "Panaskan mendidih, tambah BaCl₂ berlebih perlahan",
+                "Diamkan semalam, saring, cuci netral",
+                "Pijar 800°C, timbang sampai bobot tetap"
+            ]
+        else:
+            st.markdown("🧪 **Bahan:** Sampel, HCl, BaCl₂")
+            st.markdown("🛠 **Alat:** Gelas kimia, pemanas, corong, tanur")
+            langkah = [
+                "Timbang sampel, larutkan air, tambah HCl",
+                "Panaskan, tambah BaCl₂ panas perlahan",
+                "Diamkan 2 jam, saring, cuci bersih",
+                "Pijar, timbang endapan"
+            ]
+
+        # SISTEM CEKLIS BERURUTAN TERKUNCI
+        ceklis = [False]*len(langkah)
+        ceklis[0] = st.checkbox(langkah[0], key="p3_0")
+        ceklis[1] = st.checkbox(langkah[1], key="p3_1", disabled=not ceklis[0])
+        ceklis[2] = st.checkbox(langkah[2], key="p3_2", disabled=not ceklis[1])
+        ceklis[3] = st.checkbox(langkah[3], key="p3_3", disabled=not ceklis[2])
+        selesai = sum(ceklis)
+        st.progress(selesai/len(langkah), text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+
+    # --- PERCOBAAN 4: KADAR BESI ---
     with tab4:
         st.subheader("Percobaan 4: Penetapan Kadar Besi dalam Garam Besi(II)")
-        st.markdown("🧪 **Bahan:** Garam besi(II), larutan HCl encer, HNO₃ pekat, larutan amonia 1:1, larutan NH₄NO₃ 1%")
-        st.markdown("🛠 **Alat:** Gelas kimia, pembakar, corong kaca, kertas saring bebas abu, tanur pemijaran, neraca analitik")
-        langkah=["Timbang 0,25 gram sampel → larutkan dalam air suling + sedikit larutan HCl encer","Tambahkan HNO₃ pekat → panaskan untuk pengoksidasi sempurna ion Fe²⁺ menjadi Fe³⁺","Panaskan, teteskan larutan amonia berlebih sampai endapan Fe(OH)₃ terbentuk sempurna","Cuci dengan larutan NH₄NO₃ 1%, saring, pijar sampai menjadi Fe₂O₃ dan bobot tetap → timbang"]
-        selesai=sum(st.checkbox(l,key=f"p4_{i}") for i,l in enumerate(langkah))
-        st.progress(selesai/len(langkah),text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+        metode_pilih = st.radio("Pilih Prosedur Kerja:", ["📘 Prosedur Standar Laboratorium", "📙 Standar SNI 06-1568-1989", "📗 Standar SNI 19-1449-1989"])
+
+        if metode_pilih == "📘 Prosedur Standar Laboratorium":
+            st.markdown("🧪 **Bahan:** Garam besi(II), larutan HCl encer, HNO₃ pekat, larutan amonia 1:1, larutan NH₄NO₃ 1%")
+            st.markdown("🛠 **Alat:** Gelas kimia 400 mL, pembakar, corong kaca, kertas saring bebas abu, tanur pemijaran, neraca analitik")
+            langkah = [
+                "Timbang sampel garam besi(II) sebanyak 0,2500 gram tepat, larutkan dalam 100 mL air suling + 5 mL HCl encer",
+                "Tambahkan 2 mL HNO₃ pekat, panaskan sampai mendidih untuk mengoksidasi sempurna ion Fe²⁺ menjadi Fe³⁺",
+                "Dinginkan sedikit, teteskan larutan amonia 1:1 berlebih sambil diaduk sampai endapan Fe(OH)₃ terbentuk sempurna dan larutan bersifat basa",
+                "Saring endapan, cuci dengan larutan NH₄NO₃ 1% sampai bebas ion klorida, keringkan, pijar 800°C sampai menjadi Fe₂O₃ dan bobot tetap → timbang"
+            ]
+        elif metode_pilih == "📙 Standar SNI 06-1568-1989":
+            st.markdown("🧪 **Bahan:** Sampel besi, HCl, HNO₃, amonia")
+            st.markdown("🛠 **Alat:** Gelas kimia, pemanas, corong, tanur")
+            langkah = [
+                "Larutkan sampel dalam air + HCl",
+                "Oksidasi dengan HNO₃ panas",
+                "Endapkan dengan amonia berlebih",
+                "Saring, cuci, pijar jadi oksida besi, timbang"
+            ]
+        else:
+            st.markdown("🧪 **Bahan:** Sampel, asam kuat, pengoksidasi, amonia")
+            st.markdown("🛠 **Alat:** Gelas kimia, corong, tanur")
+            langkah = [
+                "Timbang dan larutkan sampel",
+                "Oksidasi ion besi",
+                "Endapkan sebagai hidroksida",
+                "Pijar jadi oksida, timbang"
+            ]
+
+        # SISTEM CEKLIS BERURUTAN TERKUNCI
+        ceklis = [False]*len(langkah)
+        ceklis[0] = st.checkbox(langkah[0], key="p4_0")
+        ceklis[1] = st.checkbox(langkah[1], key="p4_1", disabled=not ceklis[0])
+        ceklis[2] = st.checkbox(langkah[2], key="p4_2", disabled=not ceklis[1])
+        ceklis[3] = st.checkbox(langkah[3], key="p4_3", disabled=not ceklis[2])
+        selesai = sum(ceklis)
+        st.progress(selesai/len(langkah), text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+
+    # --- PERCOBAAN 5: KADAR BARIUM ---
     with tab5:
         st.subheader("Percobaan 5: Penetapan Kadar Barium dengan Metode Seragam")
-        st.markdown("🧪 **Bahan:** Larutan induk BaCl₂, larutan HCl 2N, larutan K₂CrO₄, kristal urea, air suling")
-        st.markdown("🛠 **Alat:** Pipet ukur, gelas kimia, penangas air mendidih, corong kaca, kertas saring, pengering udara, neraca analitik")
-        langkah=["Ambil tepat 25 mL larutan BaCl₂ 0,1 M → masukkan ke gelas kimia, tambah sedikit larutan HCl encer","Tambahkan larutan K₂CrO₄ dan kristal urea → encerkan sampai tanda batas tertentu","Panaskan perlahan sampai mendidih selama ±90 menit sampai nilai pH naik dan pengendapan berlangsung merata","Saring, cuci bersih, keringkan di pengering 110 °C sampai bobot tetap → timbang"]
-        selesai=sum(st.checkbox(l,key=f"p5_{i}") for i,l in enumerate(langkah))
-        st.progress(selesai/len(langkah),text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
+        metode_pilih = st.radio("Pilih Prosedur Kerja:", ["📘 Prosedur Standar Laboratorium", "📙 Standar SNI 06-2054-1990", "📗 Standar SNI 19-3656-1994"])
+
+        if metode_pilih == "📘 Prosedur Standar Laboratorium":
+            st.markdown("🧪 **Bahan:** Larutan induk BaCl₂ 0,1 M, larutan HCl 2N, larutan K₂CrO₄ 10%, kristal urea, air suling")
+            st.markdown("🛠 **Alat:** Pipet ukur, gelas kimia 400 mL, penangas air mendidih, corong kaca, kertas saring, desikator, neraca analitik")
+            langkah = [
+                "Ambil tepat 25,0 mL larutan BaCl₂ 0,1 M masukkan ke gelas kimia, tambahkan 2 mL larutan HCl 2N",
+                "Tambahkan 10 mL larutan K₂CrO₄ 10% dan 5 gram kristal urea, aduk sampai larut sempurna, encerkan sampai volume 200 mL",
+                "Panaskan perlahan di atas penangas air mendidih selama ± 90 menit sampai pH naik dan endapan kuning terbentuk merata",
+                "Dinginkan, saring endapan BaCrO₄, cuci bersih, keringkan dalam oven 110°C sampai bobot tetap → timbang"
+            ]
+        elif metode_pilih == "📙 Standar SNI 06-2054-1990":
+            st.markdown("🧪 **Bahan:** Larutan barium, HCl, urea, kalium kromat")
+            st.markdown("🛠 **Alat:** Pipet, gelas kimia, pemanas, corong, oven")
+            langkah = [
+                "Ambil volume tertentu larutan sampel, buat suasana asam lemah dengan HCl",
+                "Tambahkan urea dan pereaksi kromat secukupnya",
+                "Panaskan lama agar endapan terbentuk perlahan dan merata",
+                "Saring, cuci, keringkan 120°C, timbang tetap"
+            ]
+        else:
+            st.markdown("🧪 **Bahan:** Sampel barium, asam, urea, pengendap")
+            st.markdown("🛠 **Alat:** Gelas kimia, penangas, corong, alat timbang")
+            langkah = [
+                "Siapkan larutan sampel, atur keasaman",
+                "Tambahkan zat pengatur pH perlahan dan pereaksi",
+                "Panaskan sampai pengendapan sempurna",
+                "Pisahkan endapan, keringkan, timbang tetap"
+            ]
+
+        # SISTEM CEKLIS BERURUTAN TERKUNCI
+        ceklis = [False]*len(langkah)
+        ceklis[0] = st.checkbox(langkah[0], key="p5_0")
+        ceklis[1] = st.checkbox(langkah[1], key="p5_1", disabled=not ceklis[0])
+        ceklis[2] = st.checkbox(langkah[2], key="p5_2", disabled=not ceklis[1])
+        ceklis[3] = st.checkbox(langkah[3], key="p5_3", disabled=not ceklis[2])
+        selesai = sum(ceklis)
+        st.progress(selesai/len(langkah), text=f"Kemajuan: {selesai}/{len(langkah)} langkah selesai")
 
 # ====================
-# HALAMAN KALKULATOR GRAVIMETRI ✅ SUDAH DIPERBAIKI PENUH
+# HALAMAN KALKULATOR GRAVIMETRI
 # ====================
 elif menu == "🧮 Kalkulator Gravimetri":
     st.title("🧮 Kalkulator Gravimetri Otomatis")
